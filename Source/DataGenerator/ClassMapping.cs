@@ -13,6 +13,7 @@ namespace DataGenerator
         {
             AutoMap = true;
             Members = new List<MemberMapping>();
+            SyncRoot = new object();
         }
 
         public ClassMapping(TypeAccessor typeAccessor) : this()
@@ -29,5 +30,7 @@ namespace DataGenerator
         public TypeAccessor TypeAccessor { get; set; }
 
         public List<MemberMapping> Members { get; }
+
+        public object SyncRoot { get; }
     }
 }

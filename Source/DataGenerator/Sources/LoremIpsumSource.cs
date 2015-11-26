@@ -5,9 +5,10 @@ using DataGenerator.Extensions;
 
 namespace DataGenerator.Sources
 {
-    public class LoremIpsumSource : DataSourcePropertyType
+    public class LoremIpsumSource : DataSourceContainName
     {
         private static readonly Random _random = new Random();
+        private static readonly string[] _names = { "Description", "Message", "Subject", "Note" };
         private static readonly Type[] _types = { typeof(string) };
         private static readonly List<string> _words = new List<string>
         {
@@ -69,7 +70,7 @@ namespace DataGenerator.Sources
         {
         }
 
-        public LoremIpsumSource(int wordCount) : base(_types)
+        public LoremIpsumSource(int wordCount) : base(_types, _names)
         {
             WordCount = wordCount;
         }

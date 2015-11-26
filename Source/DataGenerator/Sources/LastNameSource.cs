@@ -5,7 +5,7 @@ namespace DataGenerator.Sources
     public class LastNameSource : DataSourceMatchName
     {
         private static readonly Random _random = new Random();
-        private static readonly string[] _names = new[] { "LastName" };
+        private static readonly string[] _names = { "LastName" };
         private static readonly Type[] _types = { typeof(string) };
         private static readonly string[] _lastNames =
         {

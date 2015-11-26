@@ -19,7 +19,8 @@ namespace DataGenerator.Tests
             Generator.Configure(c => c
                 .Entity<User>(m => m
                     .AutoMap()
-                    .Map(e => {
+                    .Map(e =>
+                    {
                         e.Property(p => p.FirstName).DataSource<FirstNameSource>();
                         e.Property(p => p.LastName).DataSource<LastNameSource>();
                         e.Property(p => p.Address1).DataSource<StreetSource>();
@@ -34,7 +35,7 @@ namespace DataGenerator.Tests
                         // array of values
                         e.Property(p => p.Status).DataSource(new[] { Status.New, Status.Verified });
 
-                        
+
                         // don't generate
                         e.Property(p => p.Budget).Ignore();
 
@@ -77,7 +78,37 @@ namespace DataGenerator.Tests
             instance.Should().NotBeNull();
             instance.FirstName.Should().NotBeNull();
         }
+
+
+        [Fact]
+        public void GenerateChildren()
+        {
+            Generator.Configuration.Mapping.Clear();
+            Generator.Configure(c => c
+                .Entity<Order>(m => m
+                    .Map(e =>
+                    {
+                        e.Property(p => p.User).Value(Generator.Single<User>);
+                        e.Property(p => p.Items).Value(() => Generator.List<OrderLine>(2).ToList());
+                    })
+                )
+                .Entity<OrderLine>(m => m
+                    .Map(e =>
+                    {
+                        e.Property(p => p.Quantity).IntegerSource(1, 10);
+                    })
+                )
+            );
+
+            var instance = Generator.Single<Order>();
+            instance.Should().NotBeNull();
+            instance.Name.Should().NotBeNull();
+            instance.User.Should().NotBeNull();
+            instance.Items.Should().NotBeNull();
+            instance.Items.Count.Should().Be(2);
+        }
+
     }
 
-    
+
 }

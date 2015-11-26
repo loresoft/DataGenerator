@@ -64,9 +64,11 @@
     <Compile Include="Logging\PropertyContext.cs" />
     <Compile Include="Logging\TraceLogWriter.cs" />
     <Compile Include="MappingContext.cs" />
+    <Compile Include="Sources\MoneySource.cs" />
     <Compile Include="Sources\FactoryDataSource.cs" />
     <Compile Include="Sources\GuidSource.cs" />
     <Compile Include="Sources\ListDataSource.cs" />
+    <Compile Include="Sources\NameSource.cs" />
     <Compile Include="Sources\StringIdentifierSource.cs" />
     <Compile Include="Sources\ValueDataSource.cs" />
     <Compile Include="WeightedValue.cs" />

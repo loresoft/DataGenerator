@@ -12,9 +12,12 @@ namespace DataGenerator
 {
     public class Generator
     {
+        private static readonly Random _random;
+
         static Generator()
         {
             Configuration = new Configuration();
+            _random = new Random();
         }
 
         public static Configuration Configuration { get; }
@@ -36,6 +39,18 @@ namespace DataGenerator
             return instance;
         }
 
+
+        public static IList<T> List<T>() where T : class
+        {
+            return List<T>(2, 10);
+        }
+
+        public static IList<T> List<T>(int min, int max) where T : class
+        {
+            var count = _random.Next(min, max);
+            return List<T>(count);
+        }
+
         public static IList<T> List<T>(int count) where T : class
         {
             var type = typeof(T);
@@ -51,7 +66,6 @@ namespace DataGenerator
 
             return list;
         }
-
 
 
         private static T GenerateInstance<T>(ClassMapping classMapping) where T : class
@@ -71,7 +85,7 @@ namespace DataGenerator
                 };
 
                 var value = memberMapping.DataSource.NextValue(context);
-                memberMapping.MemberAccessor.SetValue(instance, value);
+                SetValueWithCoercion(memberMapping.MemberAccessor, instance, value);
             }
 
             return instance as T;
@@ -86,46 +100,62 @@ namespace DataGenerator
             if (mapping.Mapped)
                 return mapping;
 
-            // TODO thread safe?
-
             bool autoMap = mapping.AutoMap || Configuration.AutoMap;
             if (!autoMap)
                 return mapping;
 
-
-            var typeAccessor = mapping.TypeAccessor;
-
-            // scan for data sources
-            var dataSources = Configuration
-                .DataSources()
-                .OrderBy(p=> p.Priority)
-                .ToList();
-
-            var properties = typeAccessor.GetProperties();
-            foreach (var property in properties)
+            // thread-safe initialization 
+            lock (mapping.SyncRoot)
             {
-                // get or create member
-                var memberMapping = mapping.Members.FirstOrDefault(m => m.MemberAccessor.Name == property.Name);
-                if (memberMapping == null)
+                if (mapping.Mapped)
+                    return mapping;
+
+                var typeAccessor = mapping.TypeAccessor;
+
+                // scan for data sources
+                var dataSources = Configuration
+                    .DataSources()
+                    .OrderBy(p => p.Priority)
+                    .ToList();
+
+                var properties = typeAccessor.GetProperties()
+                    .Where(p => p.HasGetter && p.HasSetter);
+
+                foreach (var property in properties)
                 {
-                    memberMapping = new MemberMapping { MemberAccessor = property };
-                    mapping.Members.Add(memberMapping);
+                    // get or create member
+                    var memberMapping = mapping.Members.FirstOrDefault(m => m.MemberAccessor.Name == property.Name);
+                    if (memberMapping == null)
+                    {
+                        memberMapping = new MemberMapping { MemberAccessor = property };
+                        mapping.Members.Add(memberMapping);
+                    }
+
+
+                    // skip already mapped fields
+                    if (memberMapping.Ignored || memberMapping.DataSource != null)
+                        continue;
+
+
+                    // search all for first match
+                    var context = new MappingContext(mapping, memberMapping);
+                    memberMapping.DataSource = dataSources.FirstOrDefault(d => d.TryMap(context));
                 }
 
+                mapping.Mapped = true;
 
-                // skip already mapped fields
-                if (memberMapping.Ignored || memberMapping.DataSource != null)
-                    continue;
-
-
-                // search all for first match
-                var context = new MappingContext(mapping, memberMapping);
-                memberMapping.DataSource = dataSources.FirstOrDefault(d => d.TryMap(context));
+                return mapping;
             }
+        }
 
-            mapping.Mapped = true;
 
-            return mapping;
+        private static void SetValueWithCoercion(IMemberAccessor targetAccessor, object target, object value)
+        {
+            Type memberType = targetAccessor.MemberType;
+            Type valueType = value?.GetType().GetUnderlyingType();
+
+            object v = ReflectionHelper.CoerceValue(memberType, valueType, value);
+            targetAccessor.SetValue(target, v);
         }
 
     }

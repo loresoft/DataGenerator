@@ -69,6 +69,8 @@
   <ItemGroup>
     <Compile Include="GeneratorTest.cs" />
     <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\OrderLine.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sources\BooleanSourceTest.cs" />
