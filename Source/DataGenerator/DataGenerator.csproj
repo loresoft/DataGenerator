@@ -46,10 +46,10 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Fluent\ClassMappingBuilder.cs" />
-    <Compile Include="Fluent\MappingConfigurationBuilder.cs" />
     <Compile Include="Fluent\MemberConfigurationBuilder.cs" />
     <Compile Include="IGenerateContext.cs" />
     <Compile Include="IMappingContext.cs" />
+    <Compile Include="IMappingProfile.cs" />
     <Compile Include="Logging\AsynchronousContext.cs" />
     <Compile Include="Logging\DisposeAction.cs" />
     <Compile Include="Logging\ILogBuilder.cs" />
@@ -64,6 +64,7 @@
     <Compile Include="Logging\PropertyContext.cs" />
     <Compile Include="Logging\TraceLogWriter.cs" />
     <Compile Include="MappingContext.cs" />
+    <Compile Include="MappingProfile.cs" />
     <Compile Include="Sources\MoneySource.cs" />
     <Compile Include="Sources\FactoryDataSource.cs" />
     <Compile Include="Sources\GuidSource.cs" />

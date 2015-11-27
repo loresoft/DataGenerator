@@ -118,18 +118,43 @@ namespace DataGenerator.Fluent
 
         public ConfigurationBuilder Entity<TEntity>(Action<ClassMappingBuilder<TEntity>> builder)
         {
+            if (builder == null)
+                throw new ArgumentNullException(nameof(builder));
+
             var type = typeof(TEntity);
-            var classMapping = Configuration.Mapping.GetOrAdd(type, t =>
-            {
-                var typeAccessor = TypeAccessor.GetAccessor(t);
-                var mapping = new ClassMapping { TypeAccessor = typeAccessor };
-                return mapping;
-            });
+            var classMapping = GetClassMap(type);
 
             var mappingBuilder = new ClassMappingBuilder<TEntity>(classMapping);
             builder(mappingBuilder);
 
             return this;
         }
+
+
+        public ConfigurationBuilder Profile<TProfile>() 
+            where TProfile : IMappingProfile, new()
+        {
+            var profile = new TProfile();
+            var type = profile.EntityType;
+            var classMapping = GetClassMap(type);
+
+            profile.Register(classMapping);
+
+            return this;
+        }
+
+
+        private ClassMapping GetClassMap(Type type)
+        {
+            var classMapping = Configuration.Mapping.GetOrAdd(type, t =>
+            {
+                var typeAccessor = TypeAccessor.GetAccessor(t);
+                var mapping = new ClassMapping(typeAccessor);
+                return mapping;
+            });
+
+            return classMapping;
+        }
+
     }
 }

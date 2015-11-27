@@ -91,6 +91,7 @@
     <Compile Include="Sources\StreetSourceTest.cs" />
     <Compile Include="Sources\TimeSpanSourceTest.cs" />
     <Compile Include="Sources\WebsiteSourceTest.cs" />
+    <Compile Include="UserProfile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
