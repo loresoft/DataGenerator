@@ -59,7 +59,7 @@ namespace DataGenerator.Fluent
 
         public MemberConfigurationBuilder<TEntity, TProperty> Value(TProperty value)
         {
-            var source = new ValueDataSource<TProperty>(value);
+            var source = new ValueSource<TProperty>(value);
             MemberMapping.DataSource = source;
 
             return this;

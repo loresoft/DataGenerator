@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\DataGenerator.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -28,6 +29,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\DataGenerator.xml</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -41,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\GlobalAssemblyInfo.cs">
+      <Link>GlobalAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="AssemblyResolver.cs" />
     <Compile Include="ClassMapping.cs" />
     <Compile Include="Configuration.cs" />
@@ -70,8 +75,8 @@
     <Compile Include="Sources\GuidSource.cs" />
     <Compile Include="Sources\ListDataSource.cs" />
     <Compile Include="Sources\NameSource.cs" />
-    <Compile Include="Sources\StringIdentifierSource.cs" />
-    <Compile Include="Sources\ValueDataSource.cs" />
+    <Compile Include="Sources\IdentifierSource.cs" />
+    <Compile Include="Sources\ValueSource.cs" />
     <Compile Include="WeightedValue.cs" />
     <Compile Include="Extensions\RandomExtensions.cs" />
     <Compile Include="Fluent\ConfigurationBuilder.cs" />
@@ -116,6 +121,7 @@
     <Compile Include="Sources\WebsiteSource.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="DataGenerator.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

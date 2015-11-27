@@ -76,6 +76,8 @@ namespace DataGenerator.Tests
             instance.Should().NotBeNull();
             instance.FirstName.Should().NotBeNull();
         }
+
+
         [Fact]
         public void GenerateProfile()
         {

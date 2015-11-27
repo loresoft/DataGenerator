@@ -2,9 +2,9 @@ using System;
 
 namespace DataGenerator.Sources
 {
-    public class ValueDataSource<T> : IDataSource
+    public class ValueSource<T> : IDataSource
     {
-        public ValueDataSource(T value)
+        public ValueSource(T value)
         {
             Value = value;
         }
