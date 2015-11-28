@@ -14,7 +14,7 @@ The DataGenerator library is available on nuget.org via package name `DataGenera
 
 To install DataGenerator, run the following command in the Package Manager Console
 
-PM> Install-Package DataGenerator
+    PM> Install-Package DataGenerator
 
 More information about NuGet package available at
 <https://nuget.org/packages/DataGenerator>
@@ -152,31 +152,31 @@ var users = Generator.List<User>(10)
 
 ### Primitive Value Data Sources
 
-**BooleanSource** - Random true or false
-**DateTimeSource** - Random date plus or minus 10 years from now
-**DecimalSource** - Random decimal between 0 and 1,000,000
-**FloatSource** - Random float between 0 and 1,000,000
-**GuidSource** - Random GUID value
-**IntegerSource** - Random integer between 0 and 32,000
-**ListDataSource** - Random value from the specified list
-**TimeSpanSource** - Random TimeSpan between 0 sec and 1 day
-**ValueSource** - Static value source
+**BooleanSource** - Random true or false   
+**DateTimeSource** - Random date plus or minus 10 years from now   
+**DecimalSource** - Random decimal between 0 and 1,000,000   
+**FloatSource** - Random float between 0 and 1,000,000   
+**GuidSource** - Random GUID value   
+**IntegerSource** - Random integer between 0 and 32,000   
+**ListDataSource** - Random value from the specified list    
+**TimeSpanSource** - Random TimeSpan between 0 sec and 1 day   
+**ValueSource** - Static value source   
 
 ### Smart Data Sources
 
-**CitySource** - Random city name from a list of the largest US cities
-**CompanySource** - Random company name from a list of fortune 500 companies
-**EmailSource** - Random email address using common domains
-**EnumSource** - Random value from available enum values
-**FirstNameSource** - Random first name from 100 common first names
-**IdentifierSource** - Random identifier value
-**LastNameSource** - Random last name from 100 common last names
-**LoremIpsumSource** - Random lorem ipsum text
-**MoneySource** - Random dollar amount between 0 and 10,000
-**NameSource** - Random code name from various sources
-**PasswordSource** - Random pronounceable password
-**PhoneSource** - Random phone number in US format
-**PostalCodeSource** - Random US zip code
-**StateSource** - Random US State
-**StreetSource** - Random US house number and street
-**WebsiteSource** - Random website from top 100 list
+**CitySource** - Random city name from a list of the largest US cities   
+**CompanySource** - Random company name from a list of fortune 500 companies   
+**EmailSource** - Random email address using common domains   
+**EnumSource** - Random value from available enum values   
+**FirstNameSource** - Random first name from 100 common first names   
+**IdentifierSource** - Random identifier value   
+**LastNameSource** - Random last name from 100 common last names   
+**LoremIpsumSource** - Random lorem ipsum text   
+**MoneySource** - Random dollar amount between 0 and 10,000   
+**NameSource** - Random code name from various sources   
+**PasswordSource** - Random pronounceable password   
+**PhoneSource** - Random phone number in US format   
+**PostalCodeSource** - Random US zip code   
+**StateSource** - Random US State   
+**StreetSource** - Random US house number and street   
+**WebsiteSource** - Random website from top 100 list   
