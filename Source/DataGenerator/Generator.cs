@@ -1,15 +1,15 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 using DataGenerator.Fluent;
 using DataGenerator.Reflection;
 
 namespace DataGenerator
 {
+
+    /// <summary>
+    /// Generate intelligent and realistic test data for an object.
+    /// </summary>
     public class Generator
     {
         private static readonly Random _random;
@@ -20,15 +20,30 @@ namespace DataGenerator
             _random = new Random();
         }
 
+        /// <summary>
+        /// Gets the generator configuration.
+        /// </summary>
+        /// <value>
+        /// The generator configuration.
+        /// </value>
         public static Configuration Configuration { get; }
 
+        /// <summary>
+        /// Configures the generator with specified fluent <paramref name="builder"/>.
+        /// </summary>
+        /// <param name="builder">The fluent builder <see langword="delegate"/>.</param>
         public static void Configure(Action<ConfigurationBuilder> builder)
         {
             var configurationBuilder = new ConfigurationBuilder(Configuration);
             builder(configurationBuilder);
         }
-     
 
+
+        /// <summary>
+        /// Generates a new instance of type <typeparamref name="T"/> with the properties set according to configuration.
+        /// </summary>
+        /// <typeparam name="T">The type to generate.</typeparam>
+        /// <returns>A new instance of type <typeparamref name="T"/> with the properties set according to configuration.</returns>
         public static T Single<T>() where T : class
         {
             var type = typeof(T);
@@ -40,17 +55,32 @@ namespace DataGenerator
         }
 
 
+        /// <summary>
+        /// Generates a random number of type <typeparamref name="T"/> with the properties set according to configuration.
+        /// </summary>
+        /// <typeparam name="T">The type to generate.</typeparam>
+        /// <returns>A list of type <typeparamref name="T"/> with the properties set according to configuration.</returns>
         public static IList<T> List<T>() where T : class
         {
             return List<T>(2, 10);
         }
 
+        /// <summary>
+        /// Generates a random number between <paramref name="min"/> and <paramref name="max"/> of type <typeparamref name="T"/> with the properties set according to configuration.
+        /// </summary>
+        /// <typeparam name="T">The type to generate.</typeparam>
+        /// <returns>A list of type <typeparamref name="T"/> with the properties set according to configuration.</returns>
         public static IList<T> List<T>(int min, int max) where T : class
         {
             var count = _random.Next(min, max);
             return List<T>(count);
         }
 
+        /// <summary>
+        /// Generates a <paramref name="count"/> of type <typeparamref name="T"/> with the properties set according to configuration.
+        /// </summary>
+        /// <typeparam name="T">The type to generate.</typeparam>
+        /// <returns>A list of type <typeparamref name="T"/> with the properties set according to configuration.</returns>
         public static IList<T> List<T>(int count) where T : class
         {
             var type = typeof(T);

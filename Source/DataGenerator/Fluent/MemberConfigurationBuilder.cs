@@ -40,6 +40,16 @@ namespace DataGenerator.Fluent
 
             return this;
         }
+
+        public MemberConfigurationBuilder<TEntity, TProperty> DataSource(IEnumerable<TProperty> values, Func<TProperty, int> weightSelector)
+        {
+            var source = new ListDataSource<TProperty>(values);
+            source.WeightSelector = weightSelector;
+
+            MemberMapping.DataSource = source;
+
+            return this;
+        }
         
 
         public MemberConfigurationBuilder<TEntity, TProperty> Ignore(bool value = true)

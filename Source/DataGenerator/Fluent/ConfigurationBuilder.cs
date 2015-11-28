@@ -34,6 +34,7 @@ namespace DataGenerator.Fluent
         public ConfigurationBuilder IncludeLoadedAssemblies()
         {
             Configuration.Assemblies.IncludeLoadedAssemblies();
+            Configuration.ClearCache();
             return this;
         }
 
@@ -59,6 +60,7 @@ namespace DataGenerator.Fluent
         public ConfigurationBuilder IncludeAssembly(Assembly assembly)
         {
             Configuration.Assemblies.IncludeAssembly(assembly);
+            Configuration.ClearCache();
             return this;
         }
 
@@ -72,6 +74,7 @@ namespace DataGenerator.Fluent
         public ConfigurationBuilder IncludeName(string name)
         {
             Configuration.Assemblies.IncludeName(name);
+            Configuration.ClearCache();
             return this;
         }
 
@@ -98,6 +101,7 @@ namespace DataGenerator.Fluent
         public ConfigurationBuilder ExcludeAssembly(Assembly assembly)
         {
             Configuration.Assemblies.ExcludeAssembly(assembly);
+            Configuration.ClearCache();
             return this;
         }
 
@@ -111,6 +115,7 @@ namespace DataGenerator.Fluent
         public ConfigurationBuilder ExcludeName(string name)
         {
             Configuration.Assemblies.ExcludeName(name);
+            Configuration.ClearCache();
             return this;
         }
 

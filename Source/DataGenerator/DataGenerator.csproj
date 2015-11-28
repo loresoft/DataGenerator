@@ -52,6 +52,7 @@
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Fluent\ClassMappingBuilder.cs" />
     <Compile Include="Fluent\MemberConfigurationBuilder.cs" />
+    <Compile Include="IDataSourceDiscover.cs" />
     <Compile Include="IGenerateContext.cs" />
     <Compile Include="IMappingContext.cs" />
     <Compile Include="IMappingProfile.cs" />

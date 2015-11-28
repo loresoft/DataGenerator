@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using DataGenerator.Extensions;
 
 namespace DataGenerator.Sources
 {
     public class ListDataSource<T> : IDataSource
     {
-        private static readonly Random _random = new Random();
-
         public ListDataSource(IEnumerable<T> items)
         {
             Items = new List<T>(items);
         }
 
         public List<T> Items { get; }
+
+        public Func<T, int> WeightSelector { get; set; }
 
         public int Priority { get; } = int.MaxValue;
 
@@ -26,8 +27,8 @@ namespace DataGenerator.Sources
             if (Items == null || Items.Count == 0)
                 return default(T);
 
-            var index = _random.Next(Items.Count - 1);
-            return Items[index];
+
+            return Items.Random(WeightSelector);
         }
     }
 }
