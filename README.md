@@ -14,7 +14,7 @@ The DataGenerator library is available on nuget.org via package name `DataGenera
 
 To install DataGenerator, run the following command in the Package Manager Console
 
-PM> Install-Package DataGenerator
+    PM> Install-Package DataGenerator
 
 More information about NuGet package available at
 <https://nuget.org/packages/DataGenerator>
