@@ -8,7 +8,7 @@ namespace DataGenerator.Sources
     public class LoremIpsumSource : DataSourceContainName
     {
         private static readonly Random _random = new Random();
-        private static readonly string[] _names = { "Description", "Message", "Subject", "Note" };
+        private static readonly string[] _names = { "Description", "Message", "Subject", "Note", "Comment", "Body" };
         private static readonly Type[] _types = { typeof(string) };
         private static readonly List<string> _words = new List<string>
         {

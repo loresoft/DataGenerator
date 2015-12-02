@@ -78,13 +78,28 @@ Generator.Configure(c => c
     .Entity<Order>(e =>
     {
         e.AutoMap();
+        // generate a User instance
         e.Property(p => p.User).Value(Generator.Single<User>);
+        // generate list of OrderLine items
         e.Property(p => p.Items).Value(() => Generator.List<OrderLine>(2).ToList());
     })
     .Entity<OrderLine>(e =>
     {
         e.AutoMap();
         e.Property(p => p.Quantity).IntegerSource(1, 10);
+    })
+);
+```
+There are extension methods to configure properties as well
+
+```csharp
+Generator.Configure(c => c
+    .Entity<OrderLine>(e =>
+    {
+        // random number between 1 and 10
+        e.Property(p => p.Quantity).IntegerSource(1, 10);
+        // between 100 and 1,000
+        e.Property(p => p.UnitAmount).DecimalSource(100, 1000);
     })
 );
 ```
@@ -127,7 +142,7 @@ public class UserProfile : MappingProfile<User>
 
 ```
 
-Register the profile in the configuration
+Register a profile in the configuration
 
 ```csharp
 Generator.Configure(c => c
@@ -148,35 +163,47 @@ var users = Generator.List<User>(10)
 
 ```
 
+You can override the configuration
+
+```csharp
+var instance = Generator.Single<User>(c =>
+{
+    // override note property with static value
+    c.Property(p => p.Note).Value("Testing static value");
+});
+```
+
 ## Data Sources
 
 ### Primitive Value Data Sources
 
-**BooleanSource** - Random true or false
-**DateTimeSource** - Random date plus or minus 10 years from now
-**DecimalSource** - Random decimal between 0 and 1,000,000
-**FloatSource** - Random float between 0 and 1,000,000
-**GuidSource** - Random GUID value
-**IntegerSource** - Random integer between 0 and 32,000
-**ListDataSource** - Random value from the specified list
-**TimeSpanSource** - Random TimeSpan between 0 sec and 1 day
-**ValueSource** - Static value source
+**BooleanSource** - Random true or false   
+**DateTimeSource** - Random date plus or minus 10 years from now    
+**DecimalSource** - Random decimal between 0 and 1,000,000    
+**FloatSource** - Random float between 0 and 1,000,000    
+**GuidSource** - Random GUID value    
+**IntegerSource** - Random integer between 0 and 32,000    
+**ListDataSource** - Random value from the specified list    
+**TimeSpanSource** - Random TimeSpan between 0 sec and 1 day    
+**ValueSource** - Static value source    
 
 ### Smart Data Sources
 
-**CitySource** - Random city name from a list of the largest US cities
-**CompanySource** - Random company name from a list of fortune 500 companies
-**EmailSource** - Random email address using common domains
-**EnumSource** - Random value from available enum values
-**FirstNameSource** - Random first name from 100 common first names
-**IdentifierSource** - Random identifier value
-**LastNameSource** - Random last name from 100 common last names
-**LoremIpsumSource** - Random lorem ipsum text
-**MoneySource** - Random dollar amount between 0 and 10,000
-**NameSource** - Random code name from various sources
-**PasswordSource** - Random pronounceable password
-**PhoneSource** - Random phone number in US format
-**PostalCodeSource** - Random US zip code
-**StateSource** - Random US State
-**StreetSource** - Random US house number and street
-**WebsiteSource** - Random website from top 100 list
+**CitySource** - Random city name from a list of the largest US cities    
+**CompanySource** - Random company name from a list of fortune 500 companies    
+**CreditCardSource** - Random credit care number    
+**EmailSource** - Random email address using common domains    
+**EnumSource** - Random value from available enum values    
+**FirstNameSource** - Random first name from 100 common first names    
+**IdentifierSource** - Random identifier value    
+**LastNameSource** - Random last name from 100 common last names    
+**LoremIpsumSource** - Random lorem ipsum text    
+**MoneySource** - Random dollar amount between 0 and 10,000    
+**NameSource** - Random code name from various sources    
+**PasswordSource** - Random pronounceable password    
+**PhoneSource** - Random phone number in US format    
+**PostalCodeSource** - Random US zip code    
+**SocialSecuritySource** - Random US Social Security Number    
+**StateSource** - Random US State    
+**StreetSource** - Random US house number and street    
+**WebsiteSource** - Random website from top 100 list    

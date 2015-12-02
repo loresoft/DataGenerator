@@ -7,7 +7,7 @@ namespace DataGenerator
     /// <summary>
     /// Mapping information on how to generate a class
     /// </summary>
-    public class ClassMapping
+    public class ClassMapping : ICloneable
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="ClassMapping"/> class.
@@ -75,5 +75,50 @@ namespace DataGenerator
         /// The synchronize object.
         /// </value>
         public object SyncRoot { get; }
+
+
+        /// <summary>
+        /// Creates a new <see langword="object"/> that is a copy of the current instance.
+        /// </summary>
+        /// <returns>
+        /// A new object that is a copy of this instance.
+        /// </returns>
+        object ICloneable.Clone()
+        {
+            return Clone();
+        }
+
+        /// <summary>
+        /// Creates a new <see langword="object"/> that is a copy of the current instance.
+        /// </summary>
+        /// <returns>
+        /// A new object that is a copy of this instance.
+        /// </returns>
+        public ClassMapping Clone()
+        {
+            var classMapping = new ClassMapping
+            {
+                AutoMap = AutoMap,
+                Ignored = Ignored,
+                Mapped = Mapped,
+                TypeAccessor = TypeAccessor,
+
+            };
+
+
+            foreach (var m in Members)
+            {
+                var memberMapping = new MemberMapping
+                {
+                    Ignored = m.Ignored,
+                    MemberAccessor = m.MemberAccessor,
+                    DataSource = m.DataSource
+                };
+
+                classMapping.Members.Add(memberMapping);
+            }
+
+            return classMapping;
+        }
     }
 }

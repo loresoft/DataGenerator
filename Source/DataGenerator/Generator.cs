@@ -54,6 +54,31 @@ namespace DataGenerator
             return instance;
         }
 
+        /// <summary>
+        /// Generates a new instance of type <typeparamref name="T"/> with specified fluent configuration <paramref name="builder"/>.
+        /// </summary>
+        /// <typeparam name="T">The type to generate.</typeparam>
+        /// <returns>A new instance of type <typeparamref name="T"/> with the properties set according to configuration.</returns>
+        /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <see langword="null" />.</exception>
+        public static T Single<T>(Action<ClassMappingBuilder<T>> builder) where T : class
+        {
+            if (builder == null)
+                throw new ArgumentNullException(nameof(builder));
+
+            var type = typeof(T);
+
+            // copy class mapping before changes
+            var classMapping = GetMapping(type).Clone();
+
+            // allow overriding class mapping
+            var mappingBuilder = new ClassMappingBuilder<T>(classMapping);
+            builder(mappingBuilder);
+
+            var instance = GenerateInstance<T>(classMapping);
+
+            return instance;
+        }
+
 
         /// <summary>
         /// Generates a random number of type <typeparamref name="T"/> with the properties set according to configuration.
@@ -86,6 +111,40 @@ namespace DataGenerator
             var type = typeof(T);
             var classMapping = GetMapping(type);
 
+            // generate at least one 
+            count = Math.Max(1, count);
+            var list = new List<T>(count);
+
+            for (int i = 0; i < count; i++)
+            {
+                var instance = GenerateInstance<T>(classMapping);
+                list.Add(instance);
+            }
+
+            return list;
+        }
+
+        /// <summary>
+        /// Generates a list of type <typeparamref name="T"/> with specified fluent configuration <paramref name="builder"/>.
+        /// </summary>
+        /// <typeparam name="T">The type to generate.</typeparam>
+        /// <returns>A list of type <typeparamref name="T"/> with the properties set according to configuration.</returns>
+        public static IList<T> List<T>(Action<ListGeneratorBuilder<T>> builder) where T : class
+        {
+            if (builder == null)
+                throw new ArgumentNullException(nameof(builder));
+
+            var type = typeof(T);
+
+            // copy class mapping before changes
+            var classMapping = GetMapping(type).Clone();
+
+            // allow overriding class mapping
+            var mappingBuilder = new ListGeneratorBuilder<T>(classMapping);
+            builder(mappingBuilder);
+
+            // generate at least one 
+            var count = Math.Max(1, mappingBuilder.GenerateCount);
             var list = new List<T>(count);
 
             for (int i = 0; i < count; i++)

@@ -118,5 +118,115 @@ namespace DataGenerator.Tests
             instance.Items.Count.Should().Be(2);
         }
 
+        [Fact]
+        public void GenerateSingleOverride()
+        {
+            Generator.Configuration.Mapping.Clear();
+            Generator.Configure(c => c
+                .Entity<User>(e =>
+                {
+                    e.AutoMap();
+
+                    e.Property(p => p.FirstName).DataSource<FirstNameSource>();
+                    e.Property(p => p.LastName).DataSource<LastNameSource>();
+                    e.Property(p => p.Address1).DataSource<StreetSource>();
+                    e.Property(p => p.City).DataSource<CitySource>();
+                    e.Property(p => p.State).DataSource<StateSource>();
+                    e.Property(p => p.Zip).DataSource<PostalCodeSource>();
+
+                    e.Property(p => p.Note).DataSource<LoremIpsumSource>();
+                    e.Property(p => p.Password).DataSource<PasswordSource>();
+                })
+            );
+
+            Generator.Configuration.Mapping.Count.Should().Be(1);
+
+            var classMapping = Generator.Configuration.Mapping.First();
+            classMapping.Should().NotBeNull();
+
+            classMapping.Value.Members.Count.Should().Be(8);
+
+            var instance = Generator.Single<User>(e =>
+            {
+                // override note property with static value
+                e.Property(p => p.Note).Value("Test");
+            });
+
+            instance.Should().NotBeNull();
+            instance.FirstName.Should().NotBeNull();
+            instance.LastName.Should().NotBeNull();
+            instance.Address1.Should().NotBeNull();
+            instance.City.Should().NotBeNull();
+            instance.State.Should().NotBeNull();
+            instance.Zip.Should().NotBeNull();
+            instance.Note.Should().Be("Test");
+            instance.Password.Should().NotBeNull();
+
+            // make sure original mapping hasn't changed
+            var userMapping = Generator.Configuration.Mapping.Values.FirstOrDefault(p => p.TypeAccessor.Type == typeof(User));
+            userMapping.Should().NotBeNull();
+
+            var memberMapping = userMapping.Members.FirstOrDefault(m => m.MemberAccessor.Name == "Note");
+            memberMapping.Should().NotBeNull();
+            memberMapping.DataSource.Should().BeOfType<LoremIpsumSource>();
+        }
+
+        [Fact]
+        public void GenerateListOverride()
+        {
+            Generator.Configuration.Mapping.Clear();
+            Generator.Configure(c => c
+                .Entity<User>(e =>
+                {
+                    e.AutoMap();
+
+                    e.Property(p => p.FirstName).DataSource<FirstNameSource>();
+                    e.Property(p => p.LastName).DataSource<LastNameSource>();
+                    e.Property(p => p.Address1).DataSource<StreetSource>();
+                    e.Property(p => p.City).DataSource<CitySource>();
+                    e.Property(p => p.State).DataSource<StateSource>();
+                    e.Property(p => p.Zip).DataSource<PostalCodeSource>();
+
+                    e.Property(p => p.Note).DataSource<LoremIpsumSource>();
+                    e.Property(p => p.Password).DataSource<PasswordSource>();
+                })
+            );
+
+            Generator.Configuration.Mapping.Count.Should().Be(1);
+
+            var classMapping = Generator.Configuration.Mapping.First();
+            classMapping.Should().NotBeNull();
+
+            classMapping.Value.Members.Count.Should().Be(8);
+
+            var list = Generator.List<User>(e =>
+            {
+                e.Count(10);
+                // override note property 
+                e.Property(p => p.Note).Value("Test");
+            });
+
+            list.Should().NotBeNullOrEmpty();
+            list.Count.Should().Be(10);
+
+            var instance = list.First();
+            instance.Should().NotBeNull();
+            instance.FirstName.Should().NotBeNull();
+            instance.LastName.Should().NotBeNull();
+            instance.Address1.Should().NotBeNull();
+            instance.City.Should().NotBeNull();
+            instance.State.Should().NotBeNull();
+            instance.Zip.Should().NotBeNull();
+            instance.Note.Should().Be("Test");
+            instance.Password.Should().NotBeNull();
+
+            // make sure original mapping hasn't changed
+            var userMapping = Generator.Configuration.Mapping.Values.FirstOrDefault(p => p.TypeAccessor.Type == typeof(User));
+            userMapping.Should().NotBeNull();
+
+            var memberMapping = userMapping.Members.FirstOrDefault(m => m.MemberAccessor.Name == "Note");
+            memberMapping.Should().NotBeNull();
+            memberMapping.DataSource.Should().BeOfType<LoremIpsumSource>();
+        }
     }
 }

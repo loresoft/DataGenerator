@@ -51,6 +51,7 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Extensions\AssemblyExtensions.cs" />
     <Compile Include="Fluent\ClassMappingBuilder.cs" />
+    <Compile Include="Fluent\ListGeneratorBuilder.cs" />
     <Compile Include="Fluent\MemberConfigurationBuilder.cs" />
     <Compile Include="IDataSourceDiscover.cs" />
     <Compile Include="IGenerateContext.cs" />
@@ -71,12 +72,14 @@
     <Compile Include="Logging\TraceLogWriter.cs" />
     <Compile Include="MappingContext.cs" />
     <Compile Include="MappingProfile.cs" />
+    <Compile Include="Sources\CreditCardSource.cs" />
     <Compile Include="Sources\MoneySource.cs" />
     <Compile Include="Sources\FactoryDataSource.cs" />
     <Compile Include="Sources\GuidSource.cs" />
     <Compile Include="Sources\ListDataSource.cs" />
     <Compile Include="Sources\NameSource.cs" />
     <Compile Include="Sources\IdentifierSource.cs" />
+    <Compile Include="Sources\SocialSecuritySource.cs" />
     <Compile Include="Sources\ValueSource.cs" />
     <Compile Include="WeightedValue.cs" />
     <Compile Include="Extensions\RandomExtensions.cs" />

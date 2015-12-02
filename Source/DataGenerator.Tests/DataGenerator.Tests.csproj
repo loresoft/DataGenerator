@@ -75,6 +75,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sources\BooleanSourceTest.cs" />
     <Compile Include="Sources\CompanySourceTest.cs" />
+    <Compile Include="Sources\CreditCardSourceTest.cs" />
     <Compile Include="Sources\DateTimeSourceTest.cs" />
     <Compile Include="Sources\DecimalSourceTest.cs" />
     <Compile Include="Sources\EmailSourceTest.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Sources\PasswordSourceTest.cs" />
     <Compile Include="Sources\PhoneSourceTest.cs" />
     <Compile Include="Sources\PostalCodeSourceTest.cs" />
+    <Compile Include="Sources\SocialSecuritySourceTest.cs" />
     <Compile Include="Sources\StateSourceTest.cs" />
     <Compile Include="Sources\StreetSourceTest.cs" />
     <Compile Include="Sources\TimeSpanSourceTest.cs" />
