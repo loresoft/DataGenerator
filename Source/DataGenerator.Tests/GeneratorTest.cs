@@ -15,8 +15,7 @@ namespace DataGenerator.Tests
         [Fact]
         public void Configure()
         {
-            Generator.Configuration.Mapping.Clear();
-            Generator.Configure(c => c
+            var generator = Generator.Create(c => c
                 .Entity<User>(e =>
                 {
                     e.AutoMap();
@@ -49,14 +48,14 @@ namespace DataGenerator.Tests
                 })
             );
 
-            Generator.Configuration.Mapping.Count.Should().Be(1);
+            generator.Configuration.Mapping.Count.Should().Be(1);
 
-            var classMapping = Generator.Configuration.Mapping.First();
+            var classMapping = generator.Configuration.Mapping.First();
             classMapping.Should().NotBeNull();
 
             classMapping.Value.Members.Count.Should().Be(12);
 
-            var instance = Generator.Single<User>();
+            var instance = generator.Single<User>();
             instance.Should().NotBeNull();
             instance.FirstName.Should().NotBeNull();
             instance.LastName.Should().NotBeNull();
@@ -71,23 +70,40 @@ namespace DataGenerator.Tests
         [Fact]
         public void GenerateAutoMap()
         {
-            Generator.Configuration.Mapping.Clear();
-            var instance = Generator.Single<User>();
+            var generator = new Generator();
+            var instance = generator.Single<User>();
             instance.Should().NotBeNull();
             instance.FirstName.Should().NotBeNull();
+        }
+
+        [Fact]
+        public void GenerateFactory()
+        {
+            var generator = Generator.Create(c => c
+                .Entity<User>(e =>
+                {
+                    e.AutoMap();
+                    e.Factory(t => new User { FirstName = "Factory" });
+                    e.Property(p => p.FirstName).Ignore();
+                })
+            );
+
+            var instance = generator.Single<User>();
+            instance.Should().NotBeNull();
+            instance.FirstName.Should().Be("Factory");
+            instance.LastName.Should().NotBeNull();
         }
 
 
         [Fact]
         public void GenerateProfile()
         {
-            Generator.Configuration.Mapping.Clear();
-            Generator.Configure(c => c
+            var generator = Generator.Create(c => c
                 .Profile<UserProfile>()
             );
 
 
-            var instance = Generator.Single<User>();
+            var instance = generator.Single<User>();
             instance.Should().NotBeNull();
             instance.FirstName.Should().NotBeNull();
         }
@@ -96,12 +112,11 @@ namespace DataGenerator.Tests
         [Fact]
         public void GenerateChildren()
         {
-            Generator.Configuration.Mapping.Clear();
-            Generator.Configure(c => c
+            var generator = Generator.Create(c => c
                 .Entity<Order>(e =>
                 {
-                    e.Property(p => p.User).Value(Generator.Single<User>);
-                    e.Property(p => p.Items).Value(() => Generator.List<OrderLine>(2).ToList());
+                    e.Property(p => p.User).Single<User>();
+                    e.Property(p => p.Items).List<OrderLine>(2);
                 })
 
                 .Entity<OrderLine>(e =>
@@ -110,7 +125,7 @@ namespace DataGenerator.Tests
                 })
             );
 
-            var instance = Generator.Single<Order>();
+            var instance = generator.Single<Order>();
             instance.Should().NotBeNull();
             instance.Name.Should().NotBeNull();
             instance.User.Should().NotBeNull();
@@ -121,8 +136,7 @@ namespace DataGenerator.Tests
         [Fact]
         public void GenerateSingleOverride()
         {
-            Generator.Configuration.Mapping.Clear();
-            Generator.Configure(c => c
+            var generator = Generator.Create(c => c
                 .Entity<User>(e =>
                 {
                     e.AutoMap();
@@ -139,14 +153,14 @@ namespace DataGenerator.Tests
                 })
             );
 
-            Generator.Configuration.Mapping.Count.Should().Be(1);
+            generator.Configuration.Mapping.Count.Should().Be(1);
 
-            var classMapping = Generator.Configuration.Mapping.First();
+            var classMapping = generator.Configuration.Mapping.First();
             classMapping.Should().NotBeNull();
 
             classMapping.Value.Members.Count.Should().Be(8);
 
-            var instance = Generator.Single<User>(e =>
+            var instance = generator.Single<User>(e =>
             {
                 // override note property with static value
                 e.Property(p => p.Note).Value("Test");
@@ -163,7 +177,7 @@ namespace DataGenerator.Tests
             instance.Password.Should().NotBeNull();
 
             // make sure original mapping hasn't changed
-            var userMapping = Generator.Configuration.Mapping.Values.FirstOrDefault(p => p.TypeAccessor.Type == typeof(User));
+            var userMapping = generator.Configuration.Mapping.Values.FirstOrDefault(p => p.TypeAccessor.Type == typeof(User));
             userMapping.Should().NotBeNull();
 
             var memberMapping = userMapping.Members.FirstOrDefault(m => m.MemberAccessor.Name == "Note");
@@ -174,8 +188,7 @@ namespace DataGenerator.Tests
         [Fact]
         public void GenerateListOverride()
         {
-            Generator.Configuration.Mapping.Clear();
-            Generator.Configure(c => c
+            var generator = Generator.Create(c => c
                 .Entity<User>(e =>
                 {
                     e.AutoMap();
@@ -192,14 +205,14 @@ namespace DataGenerator.Tests
                 })
             );
 
-            Generator.Configuration.Mapping.Count.Should().Be(1);
+            generator.Configuration.Mapping.Count.Should().Be(1);
 
-            var classMapping = Generator.Configuration.Mapping.First();
+            var classMapping = generator.Configuration.Mapping.First();
             classMapping.Should().NotBeNull();
 
             classMapping.Value.Members.Count.Should().Be(8);
 
-            var list = Generator.List<User>(e =>
+            var list = generator.List<User>(e =>
             {
                 e.Count(10);
                 // override note property 
@@ -221,7 +234,7 @@ namespace DataGenerator.Tests
             instance.Password.Should().NotBeNull();
 
             // make sure original mapping hasn't changed
-            var userMapping = Generator.Configuration.Mapping.Values.FirstOrDefault(p => p.TypeAccessor.Type == typeof(User));
+            var userMapping = generator.Configuration.Mapping.Values.FirstOrDefault(p => p.TypeAccessor.Type == typeof(User));
             userMapping.Should().NotBeNull();
 
             var memberMapping = userMapping.Members.FirstOrDefault(m => m.MemberAccessor.Name == "Note");

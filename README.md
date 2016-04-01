@@ -42,7 +42,7 @@ In your Package Manager settings add the following package source for developmen
 Full class property configuration
 
 ```csharp
-Generator.Configure(c => c
+Generator.Default.Configure(c => c
     .Entity<User>(e =>
     {
         e.Property(p => p.FirstName).DataSource<FirstNameSource>();
@@ -74,14 +74,14 @@ Generator.Configure(c => c
 Example of configuration for generating child classes
 
 ```csharp
-Generator.Configure(c => c
+Generator.Default.Configure(c => c
     .Entity<Order>(e =>
     {
         e.AutoMap();
         // generate a User instance
-        e.Property(p => p.User).Value(Generator.Single<User>);
+        e.Property(p => p.User).Single<User>();
         // generate list of OrderLine items
-        e.Property(p => p.Items).Value(() => Generator.List<OrderLine>(2).ToList());
+        e.Property(p => p.Items).List<OrderLine>(2);
     })
     .Entity<OrderLine>(e =>
     {
@@ -93,7 +93,7 @@ Generator.Configure(c => c
 There are extension methods to configure properties as well
 
 ```csharp
-Generator.Configure(c => c
+Generator.Default.Configure(c => c
     .Entity<OrderLine>(e =>
     {
         // random number between 1 and 10
@@ -145,7 +145,7 @@ public class UserProfile : MappingProfile<User>
 Register a profile in the configuration
 
 ```csharp
-Generator.Configure(c => c
+Generator.Default.Configure(c => c
   .Profile<UserProfile>()
 );
 ```
@@ -156,17 +156,17 @@ Generate test data
 
 ```csharp
 // generate a user
-var instance = Generator.Single<User>();
+var instance = Generator.Default.Single<User>();
 
 // generate 10 users
-var users = Generator.List<User>(10)
+var users = Generator.Default.List<User>(10)
 
 ```
 
 You can override the configuration
 
 ```csharp
-var instance = Generator.Single<User>(c =>
+var instance = Generator.Default.Single<User>(c =>
 {
     // override note property with static value
     c.Property(p => p.Note).Value("Testing static value");

@@ -136,5 +136,46 @@ namespace DataGenerator.Fluent
 
             return this;
         }
+
+
+        /// <summary>
+        /// Generates a new instance of type <typeparamref name="TProperty"/> from the current generator context.
+        /// </summary>
+        /// <returns></returns>
+        public MemberConfigurationBuilder<TEntity, TProperty> Single()
+        {
+            var source = new GenerateSingleSource<TProperty>();
+            MemberMapping.DataSource = source;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Generates a new instance of type <typeparamref name="T"/> from the current generator context.
+        /// </summary>
+        /// <typeparam name="T">The type to generate.</typeparam>
+        /// <returns></returns>
+        public MemberConfigurationBuilder<TEntity, TProperty> Single<T>()
+        {
+            var source = new GenerateSingleSource<T>();
+            MemberMapping.DataSource = source;
+
+            return this;
+        }
+
+        /// <summary>
+        /// Generates multiple new instances of type <typeparamref name="T" /> from the current generator context.
+        /// </summary>
+        /// <typeparam name="T">The type to generate.</typeparam>
+        /// <param name="count">The number of instances to generate.</param>
+        /// <returns></returns>
+        public MemberConfigurationBuilder<TEntity, TProperty> List<T>(int count = 10)
+        {
+            var source = new GenerateListSource<T>(count);
+            MemberMapping.DataSource = source;
+
+            return this;
+        }
+
     }
 }

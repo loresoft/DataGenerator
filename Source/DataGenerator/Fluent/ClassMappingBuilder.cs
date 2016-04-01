@@ -34,6 +34,7 @@ namespace DataGenerator.Fluent
         /// </value>
         public ClassMapping ClassMapping { get; protected set; }
 
+
         /// <summary>
         /// Sets a value indicating whether to automatic map properties of the class.
         /// </summary>
@@ -42,6 +43,19 @@ namespace DataGenerator.Fluent
         public ClassMappingBuilder<TEntity> AutoMap(bool value = true)
         {
             ClassMapping.AutoMap = value;
+            return this;
+        }
+
+        /// <summary>
+        /// Sets the instance creation factory <see langword="delegate" />.
+        /// </summary>
+        /// <param name="factory">The instance creation factory.</param>
+        /// <returns>
+        /// A fluent builder for class mapping.
+        /// </returns>
+        public ClassMappingBuilder<TEntity> Factory(Func<Type, object> factory)
+        {
+            ClassMapping.Factory = factory;
             return this;
         }
 

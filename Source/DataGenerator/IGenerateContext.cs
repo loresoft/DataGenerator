@@ -8,6 +8,14 @@ namespace DataGenerator
     public interface IGenerateContext
     {
         /// <summary>
+        /// Gets or sets the current generator.
+        /// </summary>
+        /// <value>
+        /// The current generator.
+        /// </value>
+        Generator Generator { get; set; }
+
+        /// <summary>
         /// Gets the type of the class being generated.
         /// </summary>
         /// <value>
@@ -54,6 +62,14 @@ namespace DataGenerator
     public class GenerateContext : IGenerateContext
     {
         /// <summary>
+        /// Gets or sets the current generator.
+        /// </summary>
+        /// <value>
+        /// The current generator.
+        /// </value>
+        public Generator Generator { get; set; }
+
+        /// <summary>
         /// Gets the type of the class being generated.
         /// </summary>
         /// <value>
@@ -92,5 +108,6 @@ namespace DataGenerator
         /// The current generated instance.
         /// </value>
         public object Instance { get; set; }
+
     }
 }

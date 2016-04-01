@@ -12,12 +12,14 @@ namespace DataGenerator
     /// </summary>
     public class Generator
     {
-        private static readonly Random _random;
+        private static readonly Random _random = new Random();
 
-        static Generator()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Generator"/> class.
+        /// </summary>
+        public Generator()
         {
             Configuration = new Configuration();
-            _random = new Random();
         }
 
         /// <summary>
@@ -26,13 +28,13 @@ namespace DataGenerator
         /// <value>
         /// The generator configuration.
         /// </value>
-        public static Configuration Configuration { get; }
+        public Configuration Configuration { get; }
 
         /// <summary>
         /// Configures the generator with specified fluent <paramref name="builder"/>.
         /// </summary>
-        /// <param name="builder">The fluent builder <see langword="delegate"/>.</param>
-        public static void Configure(Action<ConfigurationBuilder> builder)
+        /// <param name="builder">The fluent configuration builder <see langword="delegate"/>.</param>
+        public void Configure(Action<ConfigurationBuilder> builder)
         {
             var configurationBuilder = new ConfigurationBuilder(Configuration);
             builder(configurationBuilder);
@@ -44,7 +46,7 @@ namespace DataGenerator
         /// </summary>
         /// <typeparam name="T">The type to generate.</typeparam>
         /// <returns>A new instance of type <typeparamref name="T"/> with the properties set according to configuration.</returns>
-        public static T Single<T>() where T : class
+        public T Single<T>()
         {
             var type = typeof(T);
             var classMapping = GetMapping(type);
@@ -60,7 +62,7 @@ namespace DataGenerator
         /// <typeparam name="T">The type to generate.</typeparam>
         /// <returns>A new instance of type <typeparamref name="T"/> with the properties set according to configuration.</returns>
         /// <exception cref="ArgumentNullException"><paramref name="builder"/> is <see langword="null" />.</exception>
-        public static T Single<T>(Action<ClassMappingBuilder<T>> builder) where T : class
+        public T Single<T>(Action<ClassMappingBuilder<T>> builder)
         {
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder));
@@ -85,7 +87,7 @@ namespace DataGenerator
         /// </summary>
         /// <typeparam name="T">The type to generate.</typeparam>
         /// <returns>A list of type <typeparamref name="T"/> with the properties set according to configuration.</returns>
-        public static IList<T> List<T>() where T : class
+        public IList<T> List<T>()
         {
             return List<T>(2, 10);
         }
@@ -95,7 +97,7 @@ namespace DataGenerator
         /// </summary>
         /// <typeparam name="T">The type to generate.</typeparam>
         /// <returns>A list of type <typeparamref name="T"/> with the properties set according to configuration.</returns>
-        public static IList<T> List<T>(int min, int max) where T : class
+        public IList<T> List<T>(int min, int max)
         {
             var count = _random.Next(min, max);
             return List<T>(count);
@@ -106,7 +108,7 @@ namespace DataGenerator
         /// </summary>
         /// <typeparam name="T">The type to generate.</typeparam>
         /// <returns>A list of type <typeparamref name="T"/> with the properties set according to configuration.</returns>
-        public static IList<T> List<T>(int count) where T : class
+        public IList<T> List<T>(int count)
         {
             var type = typeof(T);
             var classMapping = GetMapping(type);
@@ -129,7 +131,7 @@ namespace DataGenerator
         /// </summary>
         /// <typeparam name="T">The type to generate.</typeparam>
         /// <returns>A list of type <typeparamref name="T"/> with the properties set according to configuration.</returns>
-        public static IList<T> List<T>(Action<ListGeneratorBuilder<T>> builder) where T : class
+        public IList<T> List<T>(Action<ListGeneratorBuilder<T>> builder)
         {
             if (builder == null)
                 throw new ArgumentNullException(nameof(builder));
@@ -157,31 +159,38 @@ namespace DataGenerator
         }
 
 
-        private static T GenerateInstance<T>(ClassMapping classMapping) where T : class
+        private T GenerateInstance<T>(ClassMapping classMapping)
         {
-            var instance = classMapping.TypeAccessor.Create();
+            var typeAccessor = classMapping.TypeAccessor;
+            var instance = classMapping.Factory != null
+                ? classMapping.Factory(typeAccessor.Type)
+                : typeAccessor.Create();
+
             foreach (var memberMapping in classMapping.Members)
             {
-                if (memberMapping.Ignored || memberMapping.DataSource == null)
+                var dataSource = memberMapping.DataSource;
+                if (memberMapping.Ignored || dataSource == null)
                     continue;
 
+                var memberAccessor = memberMapping.MemberAccessor;
                 var context = new GenerateContext
                 {
-                    ClassType = classMapping.TypeAccessor.Type,
-                    MemberType = memberMapping.MemberAccessor.MemberType,
-                    MemberName = memberMapping.MemberAccessor.Name,
+                    Generator = this,
+                    ClassType = typeAccessor.Type,
+                    MemberType = memberAccessor.MemberType,
+                    MemberName = memberAccessor.Name,
                     Instance = instance
                 };
 
-                var value = memberMapping.DataSource.NextValue(context);
-                SetValueWithCoercion(memberMapping.MemberAccessor, instance, value);
+                var value = dataSource.NextValue(context);
+                SetValueWithCoercion(memberAccessor, instance, value);
             }
 
-            return instance as T;
+            return (T)instance;
         }
 
 
-        private static ClassMapping GetMapping(Type type)
+        private ClassMapping GetMapping(Type type)
         {
             var mapping = Configuration.Mapping
                 .GetOrAdd(type, t => new ClassMapping(TypeAccessor.GetAccessor(type)));
@@ -238,7 +247,7 @@ namespace DataGenerator
         }
 
 
-        private static void SetValueWithCoercion(IMemberAccessor targetAccessor, object target, object value)
+        private void SetValueWithCoercion(IMemberAccessor targetAccessor, object target, object value)
         {
             Type memberType = targetAccessor.MemberType;
             Type valueType = value?.GetType().GetUnderlyingType();
@@ -247,6 +256,27 @@ namespace DataGenerator
             targetAccessor.SetValue(target, v);
         }
 
+
+        private static readonly Lazy<Generator> _current = new Lazy<Generator>(() => new Generator());
+
+        /// <summary>
+        /// Gets the default singleton instance of <see cref="Generator"/>.
+        /// </summary>
+        /// <value>The default singleton instance.</value>
+        public static Generator Default => _current.Value;
+
+        /// <summary>
+        /// Creates a new <see cref="Generator"/> instance with configuration from the specified <paramref name="builder"/>.
+        /// </summary>
+        /// <param name="builder">The fluent configuration builder <see langword="delegate"/>.</param>
+        /// <returns>A new instance of <see cref="Generator"/>.</returns>
+        public static Generator Create(Action<ConfigurationBuilder> builder)
+        {
+            var generator = new Generator();
+            generator.Configure(builder);
+
+            return generator;
+        }
     }
 
 }

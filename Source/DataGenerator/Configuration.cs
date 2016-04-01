@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using DataGenerator.Extensions;
-using DataGenerator.Logging;
 
 namespace DataGenerator
 {
@@ -94,27 +92,11 @@ namespace DataGenerator
 
         private static IEnumerable<Type> GetTypesAssignableFrom<T>(Assembly assembly)
         {
-            Logger.Trace()
-                .Message("Scan Start; Assembly: '{0}', Type: '{1}'", assembly.FullName, typeof(T))
-                .Write();
-
-            Stopwatch watch = Stopwatch.StartNew();
-            var types = assembly.GetTypesAssignableFrom<T>();
-            watch.Stop();
-
-            Logger.Trace()
-                .Message("Scan Complete; Assembly: '{0}', Type: '{1}', Time: {2} ms", assembly.FullName, typeof(T), watch.ElapsedMilliseconds)
-                .Write();
-
-            return types;
+            return assembly.GetTypesAssignableFrom<T>();
         }
 
         private static object CreateInstance(Type type)
         {
-            Logger.Trace()
-                .Message("Create Instance: {0}", type)
-                .Write();
-
             return Activator.CreateInstance(type);
         }
 

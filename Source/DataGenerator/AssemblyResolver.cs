@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
-using DataGenerator.Logging;
 
 namespace DataGenerator
 {
@@ -134,27 +133,12 @@ namespace DataGenerator
             if (_sources.Count == 0)
                 _sources.Add(() => AppDomain.CurrentDomain.GetAssemblies());
 
-            Logger.Trace()
-                .Logger<AssemblyResolver>()
-                .Message("Assembly Resolver Start; Sources: ({0}), Includes: ({1}), Excludes: ({2})", Sources.Count, Includes.Count, Excludes.Count)
-                .Write();
-
-
-            Stopwatch watch = Stopwatch.StartNew();
-
             var assemblies = _sources
                 .SelectMany(source => source())
                 .Where(assembly => _includes.Count == 0 || _includes.Any(include => include(assembly)))
                 .Where(assembly => _excludes.Count == 0 || !_excludes.Any(exclude => exclude(assembly)))
                 .Distinct()
                 .ToList();
-
-            watch.Stop();
-
-            Logger.Trace()
-                .Logger<AssemblyResolver>()
-                .Message("Assembly Resolver Complete; Assemblies: ({0}), Time: {1} ms", assemblies.Count, watch.ElapsedMilliseconds)
-                .Write();
 
             return assemblies;
         }

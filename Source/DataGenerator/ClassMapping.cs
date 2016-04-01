@@ -53,6 +53,14 @@ namespace DataGenerator
         public bool Mapped { get; set; }
 
         /// <summary>
+        /// Gets or sets the instance creation factory.
+        /// </summary>
+        /// <value>
+        /// The instance creation factory.
+        /// </value>
+        public Func<Type, object> Factory { get; set; }
+
+        /// <summary>
         /// Gets or sets the type accessor.
         /// </summary>
         /// <value>
