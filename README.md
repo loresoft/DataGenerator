@@ -6,8 +6,6 @@ Automatically generate intelligent and realistic test data for an object.
 
 [![NuGet Version](https://img.shields.io/nuget/v/DataGenerator.svg?style=flat-square)](https://www.nuget.org/packages/DataGenerator/)
 
-[![NuGet Version](https://img.shields.io/nuget/dt/DataGenerator.svg?style=flat-square)](https://www.nuget.org/packages/DataGenerator/)
-
 ## Download
 
 The DataGenerator library is available on nuget.org via package name `DataGenerator`.
