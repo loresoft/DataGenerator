@@ -8,16 +8,12 @@ namespace DataGenerator.Fluent
     /// <typeparam name="TEntity">The type of the entity.</typeparam>
     public class ListGeneratorBuilder<TEntity> : ClassMappingBuilder<TEntity>
     {
-        private readonly Random _random;
-
-
         /// <summary>
         /// Initializes a new instance of the <see cref="ListGeneratorBuilder{TEntity}"/> class.
         /// </summary>
         /// <param name="classMapping">The class mapping.</param>
         public ListGeneratorBuilder(ClassMapping classMapping) : base(classMapping)
         {
-            _random = new Random();
             Random(2, 10);
         }
 
