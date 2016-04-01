@@ -12,8 +12,6 @@ namespace DataGenerator
     /// </summary>
     public class Generator
     {
-        private static readonly Random _random = new Random();
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Generator"/> class.
         /// </summary>
@@ -99,7 +97,7 @@ namespace DataGenerator
         /// <returns>A list of type <typeparamref name="T"/> with the properties set according to configuration.</returns>
         public IList<T> List<T>(int min, int max)
         {
-            var count = _random.Next(min, max);
+            var count = RandomGenerator.Current.Next(min, max);
             return List<T>(count);
         }
 
@@ -278,5 +276,4 @@ namespace DataGenerator
             return generator;
         }
     }
-
 }

@@ -4,7 +4,6 @@ namespace DataGenerator.Sources
 {
     public class LastNameSource : DataSourceMatchName
     {
-        private static readonly Random _random = new Random();
         private static readonly string[] _names = { "LastName" };
         private static readonly Type[] _types = { typeof(string) };
         private static readonly string[] _lastNames =
@@ -27,7 +26,7 @@ namespace DataGenerator.Sources
 
         public override object NextValue(IGenerateContext generateContext)
         {
-            return _lastNames[_random.Next(0, _lastNames.Length)];
+            return _lastNames[RandomGenerator.Current.Next(0, _lastNames.Length)];
         }
     }
 }

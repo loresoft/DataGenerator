@@ -5,7 +5,6 @@ namespace DataGenerator.Sources
 {
     public class StreetSource : DataSourceMatchName
     {
-        private static readonly Random _random = new Random();
         private static readonly string[] _names = { "Street", "Street1", "Address", "Address1", "AddressLine1" };
         private static readonly Type[] _types = { typeof(string) };
 
@@ -23,9 +22,9 @@ namespace DataGenerator.Sources
 
         public override object NextValue(IGenerateContext generateContext)
         {
-            string street = _streets[_random.Next(0, _streets.Length)];
-            string number = _random.Next(10, 8000).ToString(CultureInfo.InvariantCulture);
-            string suffix = _suffix[_random.Next(0, _suffix.Length)];
+            string street = _streets[RandomGenerator.Current.Next(0, _streets.Length)];
+            string number = RandomGenerator.Current.Next(10, 8000).ToString(CultureInfo.InvariantCulture);
+            string suffix = _suffix[RandomGenerator.Current.Next(0, _suffix.Length)];
 
             return $"{number} {street} {suffix}";
         }

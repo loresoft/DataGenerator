@@ -4,7 +4,6 @@ namespace DataGenerator.Sources
 {
     public class StateSource : DataSourceMatchName
     {
-        private static readonly Random _random = new Random();
         private static readonly string[] _names = { "State", "StateProvidence" };
         private static readonly Type[] _types = { typeof(string) };
         private static readonly string[] _states =
@@ -22,7 +21,7 @@ namespace DataGenerator.Sources
 
         public override object NextValue(IGenerateContext generateContext)
         {
-            return _states[_random.Next(0, _states.Length)];
+            return _states[RandomGenerator.Current.Next(0, _states.Length)];
         }
     }
 }

@@ -7,7 +7,6 @@ namespace DataGenerator.Sources
 {
     public class LoremIpsumSource : DataSourceContainName
     {
-        private static readonly Random _random = new Random();
         private static readonly string[] _names = { "Description", "Message", "Subject", "Note", "Comment", "Body" };
         private static readonly Type[] _types = { typeof(string) };
         private static readonly List<string> _words = new List<string>
@@ -106,7 +105,7 @@ namespace DataGenerator.Sources
                 int remaining = words.Count - skip;
 
                 // use all remaining if less than 20
-                int take = remaining <= 20 ? remaining : _random.Next(8, 20);
+                int take = remaining <= 20 ? remaining : RandomGenerator.Current.Next(8, 20);
 
                 // if remaining after this is less than 3, use all
                 if (words.Count - (skip + take) < 3)
@@ -132,7 +131,7 @@ namespace DataGenerator.Sources
                 int remaining = sentences.Count - skip;
 
                 // use all remaining if less than 10
-                int take = remaining <= 10 ? remaining : _random.Next(5, 10);
+                int take = remaining <= 10 ? remaining : RandomGenerator.Current.Next(5, 10);
 
                 // if remaining after this is less than 3, use all
                 if (sentences.Count - (skip + take) < 3)

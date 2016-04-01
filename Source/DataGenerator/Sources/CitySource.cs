@@ -5,7 +5,6 @@ namespace DataGenerator.Sources
 {
     public class CitySource : DataSourceMatchName
     {
-        private static readonly Random _random = new Random();
         private static readonly string[] _names = { "City" };
         private static readonly Type[] _types = { typeof(string) };
         private static readonly string[] _cities =
@@ -37,7 +36,7 @@ namespace DataGenerator.Sources
 
         public override object NextValue(IGenerateContext generateContext)
         {
-            return _cities[_random.Next(0, _cities.Length)];
+            return _cities[RandomGenerator.Current.Next(0, _cities.Length)];
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -11,8 +12,6 @@ namespace DataGenerator.Extensions
     /// </summary>
     public static class RandomExtensions
     {
-        private static readonly Random _random = new Random();
-
         /// <summary>
         /// Gets a random value from the specified <paramref name="list"/>.
         /// </summary>
@@ -24,7 +23,7 @@ namespace DataGenerator.Extensions
             if (list == null || list.Count < 1)
                 return default(T);
 
-            var index = _random.Next(list.Count - 1);
+            var index = RandomGenerator.Current.Next(list.Count - 1);
             return list[index];
         }
 
@@ -69,7 +68,7 @@ namespace DataGenerator.Extensions
             foreach (var data in list)
             {
                 int weight = weightSelector(data);
-                int r = _random.Next(totalWeight + weight);
+                int r = RandomGenerator.Current.Next(totalWeight + weight);
 
                 if (r >= totalWeight)
                     selected = data;
@@ -98,5 +97,15 @@ namespace DataGenerator.Extensions
             for (int i = 0; i < count; i++)
                 yield return Random(list, weightSelector);
         }
+
+
+        public static int Next(this RandomNumberGenerator generator)
+        {
+            var buffer = new byte[4];
+            generator.GetBytes(buffer);
+
+            return BitConverter.ToInt32(buffer, 0);
+        }
+
     }
 }

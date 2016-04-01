@@ -9,7 +9,6 @@ namespace DataGenerator.Sources
 {
     public class MoneySource : DataSourceContainName
     {
-        private static readonly Random _random = new Random();
         private static readonly string[] _names = { "Amount", "Cost", "Rate" };
         private static readonly Type[] _types = { typeof(decimal), typeof(double) };
 
@@ -41,7 +40,7 @@ namespace DataGenerator.Sources
         {
             // Perform arithmetic in double type to avoid overflowing
             var range = (double)_max - (double)_min;
-            var sample = _random.NextDouble();
+            var sample = RandomGenerator.Current.NextDouble();
             var scaled = (sample * range) + (double)_min;
 
             return Math.Round((decimal)scaled, _decimals);

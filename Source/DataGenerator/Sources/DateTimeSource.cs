@@ -4,8 +4,6 @@ namespace DataGenerator.Sources
 {
     public class DateTimeSource : DataSourcePropertyType
     {
-        private static readonly Random _random = new Random();
-
         private readonly DateTime _min;
         private readonly DateTime _max;
 
@@ -29,7 +27,7 @@ namespace DataGenerator.Sources
         public override object NextValue(IGenerateContext generateContext)
         {
             var range = (_max - _min).Ticks;
-            var ticks = (long)(_random.NextDouble() * range);
+            var ticks = (long)(RandomGenerator.Current.NextDouble() * range);
 
             return _min.AddTicks(ticks);
         }

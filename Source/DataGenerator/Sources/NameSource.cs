@@ -8,7 +8,6 @@ namespace DataGenerator.Sources
 {
     public class NameSource : DataSourceMatchName
     {
-        private static readonly Random _random = new Random();
         private static readonly string[] _names = { "Name" };
         private static readonly Type[] _types = { typeof(string) };
 
@@ -58,8 +57,8 @@ namespace DataGenerator.Sources
 
         public override object NextValue(IGenerateContext generateContext)
         {
-            var a = _attributes[_random.Next(0, _attributes.Length)];
-            var o = _objects[_random.Next(0, _objects.Length)];
+            var a = _attributes[RandomGenerator.Current.Next(0, _attributes.Length)];
+            var o = _objects[RandomGenerator.Current.Next(0, _objects.Length)];
 
             return $"{a} {o}";
         }

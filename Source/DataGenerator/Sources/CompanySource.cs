@@ -4,8 +4,7 @@ namespace DataGenerator.Sources
 {
     public class CompanySource : DataSourceMatchName
     {
-        private static readonly Random _random = new Random();
-        private static readonly string[] _names = new[] { "Company", "CompanyName" };
+        private static readonly string[] _names = { "Company", "CompanyName" };
         private static readonly Type[] _types = { typeof(string) };
         private static readonly string[] _companies =
         {
@@ -36,7 +35,7 @@ namespace DataGenerator.Sources
 
         public override object NextValue(IGenerateContext generateContext)
         {
-            return _companies[_random.Next(0, _companies.Length)];
+            return _companies[RandomGenerator.Current.Next(0, _companies.Length)];
         }
     }
 }

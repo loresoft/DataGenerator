@@ -8,7 +8,6 @@ namespace DataGenerator.Sources
 {
     public class FirstNameSource : DataSourceMatchName
     {
-        private static readonly Random _random = new Random();
         private static readonly string[] _names = { "FirstName" };
         private static readonly Type[] _types = { typeof(string) };
         private static readonly string[] _firstNames =
@@ -32,7 +31,7 @@ namespace DataGenerator.Sources
 
         public override object NextValue(IGenerateContext generateContext)
         {
-            return _firstNames[_random.Next(0, _firstNames.Length)];
+            return _firstNames[RandomGenerator.Current.Next(0, _firstNames.Length)];
         }
     }
 }

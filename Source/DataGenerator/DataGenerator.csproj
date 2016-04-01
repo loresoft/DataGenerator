@@ -59,6 +59,7 @@
     <Compile Include="IMappingProfile.cs" />
     <Compile Include="MappingContext.cs" />
     <Compile Include="MappingProfile.cs" />
+    <Compile Include="RandomGenerator.cs" />
     <Compile Include="Sources\CreditCardSource.cs" />
     <Compile Include="Sources\DateTimeSourceExtensions.cs" />
     <Compile Include="Sources\DecimalSourceExtensions.cs" />

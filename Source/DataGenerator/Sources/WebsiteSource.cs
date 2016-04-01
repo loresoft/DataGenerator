@@ -4,7 +4,6 @@ namespace DataGenerator.Sources
 {
     public class WebsiteSource : DataSourceMatchName
     {
-        private static readonly Random _random = new Random();
         private static readonly string[] _names = { "WebSite", "Url" };
         private static readonly Type[] _types = { typeof(string) };
 
@@ -25,7 +24,7 @@ namespace DataGenerator.Sources
 
         public override object NextValue(IGenerateContext generateContext)
         {
-            string domain = _domains[_random.Next(0, _domains.Length)];
+            string domain = _domains[RandomGenerator.Current.Next(0, _domains.Length)];
             return $"http://www.{domain}";
         }
 

@@ -17,7 +17,6 @@ namespace DataGenerator.Sources
             Discover
         }
 
-        private static readonly Random _random = new Random();
         private static readonly string[] _names = { "CreditCard", "CardNumber" };
         private static readonly Type[] _types = { typeof(string) };
 
@@ -39,7 +38,6 @@ namespace DataGenerator.Sources
             var type = _cardTypes.Random(p => p.Weight);
             return GenerateNumber(type);
         }
-
 
 
         /// <summary>
@@ -66,13 +64,13 @@ namespace DataGenerator.Sources
                     break;
                 case CreditCardType.Mastercard:
                     number[0] = 5;
-                    number[1] = _random.Next(1, 5); // Between 1 and 5.
+                    number[1] = RandomGenerator.Current.Next(1, 5); // Between 1 and 5.
                     pos = 2;
                     len = 16;
                     break;
                 case CreditCardType.AmericanExpress:
                     number[0] = 3;
-                    number[1] = _random.Next(4, 7); // Between 4 and 7.
+                    number[1] = RandomGenerator.Current.Next(4, 7); // Between 4 and 7.
                     pos = 2;
                     len = 15;
                     break;
@@ -88,7 +86,7 @@ namespace DataGenerator.Sources
 
             // Fill all the remaining numbers except for the last one with random values.
             while (pos < len - 1)
-                number[pos++] = _random.Next(0, 9);
+                number[pos++] = RandomGenerator.Current.Next(0, 9);
 
             // Calculate the Luhn checksum of the values thus far.
             lenOffset = (len + 1) % 2;

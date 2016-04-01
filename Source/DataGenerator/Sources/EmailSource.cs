@@ -4,7 +4,6 @@ namespace DataGenerator.Sources
 {
     public class EmailSource : DataSourceMatchName
     {
-        private static readonly Random _random = new Random();
         private static readonly string[] _names = { "EmailAddress", "Email" };
         private static readonly Type[] _types = { typeof(string) };
         private static readonly string[] _domains = {
@@ -32,7 +31,7 @@ namespace DataGenerator.Sources
         {
             string name = PasswordSource.Generate(8);
             string domain = string.IsNullOrEmpty(_domain)
-                ? _domains[_random.Next(0, _domains.Length)]
+                ? _domains[RandomGenerator.Current.Next(0, _domains.Length)]
                 : _domain.Trim();
 
             return string.Format("{0}{1}@{2}", name, _index++, domain);

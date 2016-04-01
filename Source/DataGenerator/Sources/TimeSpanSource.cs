@@ -6,7 +6,6 @@ namespace DataGenerator.Sources
     {
         private readonly TimeSpan _min;
         private readonly TimeSpan _max;
-        private static readonly Random _random = new Random();
 
         public TimeSpanSource()
             : this(TimeSpan.Zero, TimeSpan.FromDays(1))
@@ -23,7 +22,7 @@ namespace DataGenerator.Sources
         public override object NextValue(IGenerateContext generateContext)
         {
             var range = (_max - _min).Ticks;
-            var ticks = (long)(_random.NextDouble() * range);
+            var ticks = (long)(RandomGenerator.Current.NextDouble() * range);
             return _min.Add(TimeSpan.FromTicks(ticks));
         }
     }

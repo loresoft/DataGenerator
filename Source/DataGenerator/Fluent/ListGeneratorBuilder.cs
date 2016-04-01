@@ -50,7 +50,7 @@ namespace DataGenerator.Fluent
         /// </returns>
         public ListGeneratorBuilder<TEntity> Random(int min, int max)
         {
-            var count = _random.Next(min, max);
+            var count = RandomGenerator.Current.Next(min, max);
             GenerateCount = count;
             return this;
         }

@@ -4,8 +4,6 @@ namespace DataGenerator.Sources
 {
     public class DecimalSource : DataSourcePropertyType
     {
-        private static readonly Random _random = new Random();
-
         private readonly decimal _min;
         private readonly decimal _max;
         private readonly int? _decimals;
@@ -34,7 +32,7 @@ namespace DataGenerator.Sources
         {
             // Perform arithmetic in double type to avoid overflowing
             var range = (double)_max - (double)_min;
-            var sample = _random.NextDouble();
+            var sample = RandomGenerator.Current.NextDouble();
             var scaled = (sample * range) + (double)_min;
 
             return _decimals.HasValue

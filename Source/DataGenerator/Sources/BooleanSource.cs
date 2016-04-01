@@ -5,8 +5,6 @@ namespace DataGenerator.Sources
 {
     public class BooleanSource : DataSourcePropertyType
     {
-        private static readonly Random _random = new Random();
-
         public BooleanSource() 
             : base(new[] { typeof(bool) })
         {
@@ -14,7 +12,7 @@ namespace DataGenerator.Sources
 
         public override object NextValue(IGenerateContext generateContext)
         {
-            return _random.Next(2) == 1;
+            return RandomGenerator.Current.Next(2) == 1;
         }
     }
 }

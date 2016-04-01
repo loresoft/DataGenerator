@@ -4,8 +4,6 @@ namespace DataGenerator.Sources
 {
     public class IntegerSource : DataSourcePropertyType
     {
-        private static readonly Random _random = new Random();
-
         private readonly int _min;
         private readonly int _max;
 
@@ -25,7 +23,7 @@ namespace DataGenerator.Sources
 
         public override object NextValue(IGenerateContext generateContext)
         {
-            return _random.Next(_min, _max);
+            return RandomGenerator.Current.Next(_min, _max);
         }
     }
 }

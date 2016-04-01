@@ -5,7 +5,6 @@ namespace DataGenerator.Sources
 {
     public class PasswordSource : DataSourceMatchName
     {
-        private static readonly Random _random = new Random();
         private static readonly string[] _names = { "Password", "UserPassword" };
         private static readonly Type[] _types = { typeof(string) };
 
@@ -40,22 +39,22 @@ namespace DataGenerator.Sources
 
             for (counter = 0; counter <= passwordLength; counter++)
             {
-                if (password.Length > 0 & (wroteConsonant == false) & (_random.Next(100) < 10))
+                if (password.Length > 0 & (wroteConsonant == false) & (RandomGenerator.Current.Next(100) < 10))
                 {
-                    password.Append(_doubleConsonants[_random.Next(_doubleConsonants.Length)], 2);
+                    password.Append(_doubleConsonants[RandomGenerator.Current.Next(_doubleConsonants.Length)], 2);
                     counter += 1;
                     wroteConsonant = true;
                     continue;
                 }
 
-                if ((wroteConsonant == false) & (_random.Next(100) < 90))
+                if ((wroteConsonant == false) & (RandomGenerator.Current.Next(100) < 90))
                 {
-                    password.Append(_consonants[_random.Next(_consonants.Length)]);
+                    password.Append(_consonants[RandomGenerator.Current.Next(_consonants.Length)]);
                     wroteConsonant = true;
                 }
                 else
                 {
-                    password.Append(_vowels[_random.Next(_vowels.Length)]);
+                    password.Append(_vowels[RandomGenerator.Current.Next(_vowels.Length)]);
                     wroteConsonant = false;
                 }
             }

@@ -4,7 +4,6 @@ namespace DataGenerator.Sources
 {
     public class PostalCodeSource : DataSourceMatchName
     {
-        private static readonly Random _random = new Random();
         private static readonly string[] _names = { "PostalCode", "ZipCode", "Zip" };
         private static readonly Type[] _types = { typeof(string) };
         private static readonly string[] _postalCodes =
@@ -34,7 +33,7 @@ namespace DataGenerator.Sources
 
         public override object NextValue(IGenerateContext generateContext)
         {
-            return _postalCodes[_random.Next(0, _postalCodes.Length)];
+            return _postalCodes[RandomGenerator.Current.Next(0, _postalCodes.Length)];
         }
     }
 }
