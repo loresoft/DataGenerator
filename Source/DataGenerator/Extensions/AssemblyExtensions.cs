@@ -40,6 +40,10 @@ namespace DataGenerator.Extensions
             if (assembly == null)
                 throw new ArgumentNullException("assembly");
 
+            // skip dynamic assemblies
+            if (assembly.IsDynamic)
+                return Enumerable.Empty<Type>();
+
             Type[] types;
 
             try
@@ -50,6 +54,11 @@ namespace DataGenerator.Extensions
             {
                 //not interested in the types which cause the problem, load what we can
                 types = e.Types.Where(t => t != null).ToArray();
+            }
+            catch(NotSupportedException)
+            {
+                // some assemblies don't support getting types, ignore
+                return Enumerable.Empty<Type>();
             }
 
             return types;
