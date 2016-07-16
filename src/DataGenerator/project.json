@@ -1,0 +1,44 @@
+﻿{
+  "version": "2.0.0.0",
+  "description": "Automatically generate intelligent and realistic test data for an object.",
+  "language": "en-US",
+  "authors": [ "LoreSoft" ],
+  "packOptions": {
+    "copyright": "Copyright (c) 2016, LoreSoft",
+    "owners": [ "LoreSoft" ],
+    "projectUrl": "https://github.com/loresoft/DataGenerator",
+    "licenseUrl": "https://raw.githubusercontent.com/loresoft/DataGenerator/master/LICENSE",
+    "requireLicenseAcceptance": false,
+    "summary": "Generate intelligent and realistic test data for an object.",
+    "tags": [  "Test", "Data Generation", "Fake", "Sample" ]
+  },
+  "buildOptions": {
+    "compile": [ "..\\GlobalAssemblyInfo.cs" ],
+    "xmlDoc": true
+  },
+  "frameworks": {
+    "net40": {
+      "frameworkAssemblies": {
+        "Microsoft.CSharp": "",
+        "System.Core": "",
+        "System.ComponentModel.DataAnnotations": ""
+      }
+    },
+    "net45": {
+      "frameworkAssemblies": {
+        "Microsoft.CSharp": "",
+        "System.Core": "",
+        "System.ComponentModel.DataAnnotations": ""
+      }
+    },
+    "netstandard1.6": {
+      "dependencies": {
+        "NETStandard.Library": "1.6.0",
+        "System.ComponentModel.Annotations": "4.1.0",
+        "System.ComponentModel.TypeConverter": "4.1.0",
+        "System.Reflection.Emit.Lightweight": "4.0.1"
+      }
+    }
+
+  }
+}
