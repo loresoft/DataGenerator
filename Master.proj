@@ -57,6 +57,7 @@
                   AssemblyTrademark=""/>
     <ItemGroup>
       <VersionFiles Include="$(SourceFolder)\**\project.json"/>
+      <VersionFiles Include="$(TestFolder)\**\project.json"/>
     </ItemGroup>
 
     <FileUpdate Files="%(VersionFiles.Identity)"
@@ -65,7 +66,7 @@
 
     <FileUpdate Files="%(VersionFiles.Identity)"
                 Regex="&quot;DataGenerator&quot;: &quot;$(AssemblyVersion)&quot;,"
-                ReplacementText="&quot;FluentRest&quot;: &quot;$(PackageVersion)&quot;," />
+                ReplacementText="&quot;DataGenerator&quot;: &quot;$(PackageVersion)&quot;," />
   </Target>
 
   <Target Name="Compile" DependsOnTargets="Clean;Version">
