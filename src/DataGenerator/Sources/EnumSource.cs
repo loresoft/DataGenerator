@@ -6,11 +6,20 @@ using DataGenerator.Reflection;
 
 namespace DataGenerator.Sources
 {
-    public class EnumSource : IDataSource
+    /// <summary>
+    /// Enum value data source
+    /// </summary>
+    /// <seealso cref="DataGenerator.IDataSource" />
+    public class EnumSource : DataSourceBase
     {
-        public int Priority { get; } = int.MaxValue;
-
-        public bool TryMap(IMappingContext mappingContext)
+        /// <summary>
+        /// Test if the current <paramref name="mappingContext" /> can use this data source.
+        /// </summary>
+        /// <param name="mappingContext">The mapping context.</param>
+        /// <returns>
+        ///   <c>true</c> if this data source can be used; otherwise <c>false</c>.
+        /// </returns>
+        public override bool TryMap(IMappingContext mappingContext)
         {
             var memberType = mappingContext?.MemberMapping?.MemberAccessor?.MemberType;
             if (memberType == null)
@@ -19,7 +28,14 @@ namespace DataGenerator.Sources
             return memberType.GetTypeInfo().IsEnum == true;
         }
 
-        public object NextValue(IGenerateContext generateContext)
+        /// <summary>
+        /// Get a value from the data source.
+        /// </summary>
+        /// <param name="generateContext">The generate context.</param>
+        /// <returns>
+        /// A new value from the data source.
+        /// </returns>
+        public override object NextValue(IGenerateContext generateContext)
         {
             var values = Enum.GetValues(generateContext.MemberType);
             var index = RandomGenerator.Current.Next(values.Length);

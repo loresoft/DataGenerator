@@ -3,6 +3,10 @@ using System.Text;
 
 namespace DataGenerator.Sources
 {
+    /// <summary>
+    /// Password generator data source
+    /// </summary>
+    /// <seealso cref="DataGenerator.Sources.DataSourceMatchName" />
     public class PasswordSource : DataSourceMatchName
     {
         private static readonly string[] _names = { "Password", "UserPassword" };
@@ -14,23 +18,43 @@ namespace DataGenerator.Sources
 
         private readonly int _length;
 
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PasswordSource"/> class.
+        /// </summary>
         public PasswordSource()
             : this(8)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PasswordSource"/> class.
+        /// </summary>
+        /// <param name="length">The password length.</param>
         public PasswordSource(int length) : base(_types, _names)
         {
             _length = length;
         }
 
 
+        /// <summary>
+        /// Get a value from the data source.
+        /// </summary>
+        /// <param name="generateContext">The generate context.</param>
+        /// <returns>
+        /// A new value from the data source.
+        /// </returns>
         public override object NextValue(IGenerateContext generateContext)
         {
             return Generate(_length);
         }
 
 
+        /// <summary>
+        /// Generates a password with the specified length.
+        /// </summary>
+        /// <param name="passwordLength">Length of the password.</param>
+        /// <returns>A generated password</returns>
         public static string Generate(int passwordLength)
         {
             bool wroteConsonant = false;

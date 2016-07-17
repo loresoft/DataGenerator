@@ -7,13 +7,24 @@ using DataGenerator.Extensions;
 
 namespace DataGenerator.Sources
 {
+    /// <summary>
+    /// Credit card data source generator
+    /// </summary>
+    /// <seealso cref="DataGenerator.Sources.DataSourceMatchName" />
     public class CreditCardSource : DataSourceMatchName
     {
+        /// <summary>
+        /// Credit card types
+        /// </summary>
         public enum CreditCardType
         {
+            /// <summary>Visa credit card</summary>
             Visa,
+            /// <summary>Mastercard credit card</summary>
             Mastercard,
+            /// <summary>American Express credit card</summary>
             AmericanExpress,
+            /// <summary>Discover credit card</summary>
             Discover
         }
 
@@ -25,13 +36,24 @@ namespace DataGenerator.Sources
             new WeightedValue<CreditCardType>(CreditCardType.Visa, 3),
             new WeightedValue<CreditCardType>(CreditCardType.Mastercard, 3),
             new WeightedValue<CreditCardType>(CreditCardType.AmericanExpress, 2),
-            new WeightedValue<CreditCardType>(CreditCardType.Discover, 1),
+            new WeightedValue<CreditCardType>(CreditCardType.Discover, 1)
         };
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CreditCardSource"/> class.
+        /// </summary>
         public CreditCardSource() : base(_types, _names)
         {
         }
 
+
+        /// <summary>
+        /// Get a value from the data source.
+        /// </summary>
+        /// <param name="generateContext">The generate context.</param>
+        /// <returns>
+        /// A new value from the data source.
+        /// </returns>
         public override object NextValue(IGenerateContext generateContext)
         {
             // random card type

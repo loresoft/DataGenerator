@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace DataGenerator.Sources
 {
+    /// <summary>
+    /// First name data source generator
+    /// </summary>
+    /// <seealso cref="DataGenerator.Sources.DataSourceMatchName" />
     public class FirstNameSource : DataSourceMatchName
     {
         private static readonly string[] _names = { "FirstName" };
@@ -25,10 +29,20 @@ namespace DataGenerator.Sources
             "Samantha", "Janet", "Debra", "Carolyn", "Rachel", "Heather"
         };
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FirstNameSource"/> class.
+        /// </summary>
         public FirstNameSource() : base(_types, _names)
         {
         }
 
+        /// <summary>
+        /// Get a value from the data source.
+        /// </summary>
+        /// <param name="generateContext">The generate context.</param>
+        /// <returns>
+        /// A new value from the data source.
+        /// </returns>
         public override object NextValue(IGenerateContext generateContext)
         {
             return _firstNames[RandomGenerator.Current.Next(0, _firstNames.Length)];

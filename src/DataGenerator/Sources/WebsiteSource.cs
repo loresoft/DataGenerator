@@ -2,6 +2,11 @@
 
 namespace DataGenerator.Sources
 {
+
+    /// <summary>
+    /// Website data source
+    /// </summary>
+    /// <seealso cref="DataGenerator.Sources.DataSourceMatchName" />
     public class WebsiteSource : DataSourceMatchName
     {
         private static readonly string[] _names = { "WebSite", "Url" };
@@ -18,10 +23,20 @@ namespace DataGenerator.Sources
             "espn.go.com",
         };
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WebsiteSource"/> class.
+        /// </summary>
         public WebsiteSource() : base(_types, _names)
         {
         }
 
+        /// <summary>
+        /// Get a value from the data source.
+        /// </summary>
+        /// <param name="generateContext">The generate context.</param>
+        /// <returns>
+        /// A new value from the data source.
+        /// </returns>
         public override object NextValue(IGenerateContext generateContext)
         {
             string domain = _domains[RandomGenerator.Current.Next(0, _domains.Length)];

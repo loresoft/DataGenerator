@@ -2,6 +2,10 @@
 
 namespace DataGenerator.Sources
 {
+    /// <summary>
+    ///   <see cref="Decimal" /> data source generator
+    /// </summary>
+    /// <seealso cref="DataGenerator.Sources.DataSourcePropertyType" />
     public class DecimalSource : DataSourcePropertyType
     {
         private readonly decimal _min;
@@ -9,16 +13,30 @@ namespace DataGenerator.Sources
         private readonly int? _decimals;
 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DecimalSource"/> class.
+        /// </summary>
         public DecimalSource()
             : this(0, 1000000, 2)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DecimalSource"/> class.
+        /// </summary>
+        /// <param name="min">The minimum value.</param>
+        /// <param name="max">The maximum value.</param>
         public DecimalSource(decimal min, decimal max)
-            : this(min, max, 0)
+            : this(min, max, 2)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DecimalSource"/> class.
+        /// </summary>
+        /// <param name="min">The minimum value.</param>
+        /// <param name="max">The maximum value.</param>
+        /// <param name="decimals">The number of decimal places.</param>
         public DecimalSource(decimal min, decimal max, int decimals)
             : base(new[] { typeof(decimal) })
         {
@@ -28,6 +46,13 @@ namespace DataGenerator.Sources
         }
 
 
+        /// <summary>
+        /// Get a value from the data source.
+        /// </summary>
+        /// <param name="generateContext">The generate context.</param>
+        /// <returns>
+        /// A new value from the data source.
+        /// </returns>
         public override object NextValue(IGenerateContext generateContext)
         {
             // Perform arithmetic in double type to avoid overflowing

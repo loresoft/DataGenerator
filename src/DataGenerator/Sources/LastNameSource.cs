@@ -2,6 +2,10 @@
 
 namespace DataGenerator.Sources
 {
+    /// <summary>
+    /// Last name value generator data source
+    /// </summary>
+    /// <seealso cref="DataGenerator.Sources.DataSourceMatchName" />
     public class LastNameSource : DataSourceMatchName
     {
         private static readonly string[] _names = { "LastName" };
@@ -20,10 +24,21 @@ namespace DataGenerator.Sources
             "Sullivan", "Russell", "Ortiz", "Jenkins", "Gutierrez", "Perry", "Butler", "Barnes", "Fisher"
         };
 
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LastNameSource"/> class.
+        /// </summary>
         public LastNameSource() : base(_types, _names)
         {
         }
 
+        /// <summary>
+        /// Get a value from the data source.
+        /// </summary>
+        /// <param name="generateContext">The generate context.</param>
+        /// <returns>
+        /// A new value from the data source.
+        /// </returns>
         public override object NextValue(IGenerateContext generateContext)
         {
             return _lastNames[RandomGenerator.Current.Next(0, _lastNames.Length)];

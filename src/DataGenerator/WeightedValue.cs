@@ -45,7 +45,7 @@ namespace DataGenerator
         public T Value { get; }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="WeightedValue{T}" /> to <see cref="T" />.
+        /// Performs an implicit conversion from <see cref="WeightedValue{T}" /> to <typeparamref name="T"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>

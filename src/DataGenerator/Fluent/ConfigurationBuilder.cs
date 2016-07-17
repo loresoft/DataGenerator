@@ -33,7 +33,7 @@ namespace DataGenerator.Fluent
 
 
         /// <summary>
-        /// Include the <see cref="AppDomain" /> loaded assemblies as a source.
+        /// Include the current loaded assemblies as a source.
         /// </summary>
         /// <returns>
         /// A fluent <see langword="interface"/> to configure DataGenerator.

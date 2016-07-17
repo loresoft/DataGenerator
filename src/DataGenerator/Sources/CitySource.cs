@@ -3,6 +3,10 @@ using System.Collections.Generic;
 
 namespace DataGenerator.Sources
 {
+    /// <summary>
+    /// City name data source generator
+    /// </summary>
+    /// <seealso cref="DataGenerator.Sources.DataSourceMatchName" />
     public class CitySource : DataSourceMatchName
     {
         private static readonly string[] _names = { "City" };
@@ -30,13 +34,24 @@ namespace DataGenerator.Sources
             "Huntington", "Montgomery", "Boise", "Arlington", "San Bernardino"
         };
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CitySource"/> class.
+        /// </summary>
         public CitySource() : base(_types, _names)
         {
         }
 
+        /// <summary>
+        /// Get a value from the data source.
+        /// </summary>
+        /// <param name="generateContext">The generate context.</param>
+        /// <returns>
+        /// A new value from the data source.
+        /// </returns>
         public override object NextValue(IGenerateContext generateContext)
         {
-            return _cities[RandomGenerator.Current.Next(0, _cities.Length)];
+            var i = RandomGenerator.Current.Next(0, _cities.Length);
+            return _cities[i];
         }
     }
 }

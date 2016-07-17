@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace DataGenerator.Sources
 {
+    /// <summary>
+    /// Money data source
+    /// </summary>
+    /// <seealso cref="DataGenerator.Sources.DataSourceContainName" />
     public class MoneySource : DataSourceContainName
     {
         private static readonly string[] _names = { "Amount", "Cost", "Rate" };
@@ -17,16 +21,30 @@ namespace DataGenerator.Sources
         private readonly int _decimals;
 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MoneySource"/> class.
+        /// </summary>
         public MoneySource()
             : this(0, 10000, 2)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MoneySource"/> class.
+        /// </summary>
+        /// <param name="min">The minimum value.</param>
+        /// <param name="max">The maximum value.</param>
         public MoneySource(decimal min, decimal max)
             : this(min, max, 2)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MoneySource"/> class.
+        /// </summary>
+        /// <param name="min">The minimum value.</param>
+        /// <param name="max">The maximum value.</param>
+        /// <param name="decimals">The number of decimal places.</param>
         public MoneySource(decimal min, decimal max, int decimals)
             : base(_types, _names)
         {
@@ -36,6 +54,13 @@ namespace DataGenerator.Sources
         }
 
 
+        /// <summary>
+        /// Get a value from the data source.
+        /// </summary>
+        /// <param name="generateContext">The generate context.</param>
+        /// <returns>
+        /// A new value from the data source.
+        /// </returns>
         public override object NextValue(IGenerateContext generateContext)
         {
             // Perform arithmetic in double type to avoid overflowing

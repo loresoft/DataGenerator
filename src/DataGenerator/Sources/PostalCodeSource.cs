@@ -2,6 +2,11 @@
 
 namespace DataGenerator.Sources
 {
+
+    /// <summary>
+    /// Postal code data source
+    /// </summary>
+    /// <seealso cref="DataGenerator.Sources.DataSourceMatchName" />
     public class PostalCodeSource : DataSourceMatchName
     {
         private static readonly string[] _names = { "PostalCode", "ZipCode", "Zip" };
@@ -26,11 +31,21 @@ namespace DataGenerator.Sources
         };
 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PostalCodeSource"/> class.
+        /// </summary>
         public PostalCodeSource() : base(_types, _names)
         {
         }
 
 
+        /// <summary>
+        /// Get a value from the data source.
+        /// </summary>
+        /// <param name="generateContext">The generate context.</param>
+        /// <returns>
+        /// A new value from the data source.
+        /// </returns>
         public override object NextValue(IGenerateContext generateContext)
         {
             return _postalCodes[RandomGenerator.Current.Next(0, _postalCodes.Length)];

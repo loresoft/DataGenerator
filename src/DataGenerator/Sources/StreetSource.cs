@@ -3,6 +3,10 @@ using System.Globalization;
 
 namespace DataGenerator.Sources
 {
+    /// <summary>
+    /// Street data source
+    /// </summary>
+    /// <seealso cref="DataGenerator.Sources.DataSourceMatchName" />
     public class StreetSource : DataSourceMatchName
     {
         private static readonly string[] _names = { "Street", "Street1", "Address", "Address1", "AddressLine1" };
@@ -16,10 +20,20 @@ namespace DataGenerator.Sources
             "Elm", "View", "Washington", "Ninth", "Lake", "Hill"
         };
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StreetSource"/> class.
+        /// </summary>
         public StreetSource() : base(_types, _names)
         {
         }
 
+        /// <summary>
+        /// Get a value from the data source.
+        /// </summary>
+        /// <param name="generateContext">The generate context.</param>
+        /// <returns>
+        /// A new value from the data source.
+        /// </returns>
         public override object NextValue(IGenerateContext generateContext)
         {
             string street = _streets[RandomGenerator.Current.Next(0, _streets.Length)];

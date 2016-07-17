@@ -5,6 +5,10 @@ using DataGenerator.Extensions;
 
 namespace DataGenerator.Sources
 {
+    /// <summary>
+    /// Lorem Ipsum data source
+    /// </summary>
+    /// <seealso cref="DataGenerator.Sources.DataSourceContainName" />
     public class LoremIpsumSource : DataSourceContainName
     {
         private static readonly string[] _names = { "Description", "Message", "Subject", "Note", "Comment", "Body" };
@@ -65,19 +69,39 @@ namespace DataGenerator.Sources
         };
 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LoremIpsumSource"/> class.
+        /// </summary>
         public LoremIpsumSource() : this(100)
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LoremIpsumSource"/> class.
+        /// </summary>
+        /// <param name="wordCount">The word count.</param>
         public LoremIpsumSource(int wordCount) : base(_types, _names)
         {
             WordCount = wordCount;
         }
 
 
+        /// <summary>
+        /// Gets or sets the word count.
+        /// </summary>
+        /// <value>
+        /// The word count.
+        /// </value>
         public int WordCount { get; set; }
 
 
+        /// <summary>
+        /// Get a value from the data source.
+        /// </summary>
+        /// <param name="generateContext">The generate context.</param>
+        /// <returns>
+        /// A new value from the data source.
+        /// </returns>
         public override object NextValue(IGenerateContext generateContext)
         {
             // get random words

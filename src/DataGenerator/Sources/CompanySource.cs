@@ -2,6 +2,10 @@
 
 namespace DataGenerator.Sources
 {
+    /// <summary>
+    /// Company data source generator
+    /// </summary>
+    /// <seealso cref="DataGenerator.Sources.DataSourceMatchName" />
     public class CompanySource : DataSourceMatchName
     {
         private static readonly string[] _names = { "Company", "CompanyName" };
@@ -29,13 +33,24 @@ namespace DataGenerator.Sources
         };
 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CompanySource"/> class.
+        /// </summary>
         public CompanySource() : base(_types, _names)
         {
         }
 
+        /// <summary>
+        /// Get a value from the data source.
+        /// </summary>
+        /// <param name="generateContext">The generate context.</param>
+        /// <returns>
+        /// A new value from the data source.
+        /// </returns>
         public override object NextValue(IGenerateContext generateContext)
         {
-            return _companies[RandomGenerator.Current.Next(0, _companies.Length)];
+            var i = RandomGenerator.Current.Next(0, _companies.Length);
+            return _companies[i];
         }
     }
 }

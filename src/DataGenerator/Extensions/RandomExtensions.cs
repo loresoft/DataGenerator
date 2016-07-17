@@ -99,6 +99,11 @@ namespace DataGenerator.Extensions
         }
 
 
+        /// <summary>
+        /// Returns a non-negative random integer.
+        /// </summary>
+        /// <param name="generator">The generator.</param>
+        /// <returns>A 32-bit signed integer that is greater than or equal to 0 and less than MaxValue.</returns>
         public static int Next(this RandomNumberGenerator generator)
         {
             var buffer = new byte[4];
