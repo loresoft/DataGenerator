@@ -14,7 +14,7 @@ namespace DataGenerator
         /// The type of the entity.
         /// </value>
         Type EntityType { get; }
-        
+
         /// <summary>
         /// Registers the specified class mapping.
         /// </summary>

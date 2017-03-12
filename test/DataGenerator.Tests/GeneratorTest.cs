@@ -17,6 +17,7 @@ namespace DataGenerator.Tests
         public void Configure()
         {
             var generator = Generator.Create(c => c
+                .ExcludeName("xunit")
                 .Entity<User>(e =>
                 {
                     e.AutoMap();
@@ -71,7 +72,9 @@ namespace DataGenerator.Tests
         [Fact]
         public void GenerateAutoMap()
         {
-            var generator = new Generator();
+            var generator = Generator.Create(c => c
+                .ExcludeName("xunit")
+            );
             var instance = generator.Single<User>();
             instance.Should().NotBeNull();
             instance.FirstName.Should().NotBeNull();
@@ -81,6 +84,7 @@ namespace DataGenerator.Tests
         public void GenerateFactory()
         {
             var generator = Generator.Create(c => c
+                .ExcludeName("xunit")
                 .Entity<User>(e =>
                 {
                     e.AutoMap();
@@ -100,6 +104,7 @@ namespace DataGenerator.Tests
         public void GenerateProfile()
         {
             var generator = Generator.Create(c => c
+                .ExcludeName("xunit")
                 .Profile<UserProfile>()
             );
 
@@ -114,6 +119,7 @@ namespace DataGenerator.Tests
         public void GenerateChildren()
         {
             var generator = Generator.Create(c => c
+                .ExcludeName("xunit")
                 .Entity<Order>(e =>
                 {
                     e.Property(p => p.User).Single<User>();
@@ -138,6 +144,7 @@ namespace DataGenerator.Tests
         public void GenerateSingleOverride()
         {
             var generator = Generator.Create(c => c
+                .ExcludeName("xunit")
                 .Entity<User>(e =>
                 {
                     e.AutoMap();
@@ -190,6 +197,7 @@ namespace DataGenerator.Tests
         public void GenerateListOverride()
         {
             var generator = Generator.Create(c => c
+                .ExcludeName("xunit")
                 .Entity<User>(e =>
                 {
                     e.AutoMap();
@@ -216,7 +224,7 @@ namespace DataGenerator.Tests
             var list = generator.List<User>(e =>
             {
                 e.Count(10);
-                // override note property 
+                // override note property
                 e.Property(p => p.Note).Value("Test");
             });
 

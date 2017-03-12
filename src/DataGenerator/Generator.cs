@@ -111,7 +111,7 @@ namespace DataGenerator
             var type = typeof(T);
             var classMapping = GetMapping(type);
 
-            // generate at least one 
+            // generate at least one
             count = Math.Max(1, count);
             var list = new List<T>(count);
 
@@ -143,7 +143,7 @@ namespace DataGenerator
             var mappingBuilder = new ListGeneratorBuilder<T>(classMapping);
             builder(mappingBuilder);
 
-            // generate at least one 
+            // generate at least one
             var count = Math.Max(1, mappingBuilder.GenerateCount);
             var list = new List<T>(count);
 
@@ -200,7 +200,7 @@ namespace DataGenerator
             if (!autoMap)
                 return mapping;
 
-            // thread-safe initialization 
+            // thread-safe initialization
             lock (mapping.SyncRoot)
             {
                 if (mapping.Mapped)

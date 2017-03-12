@@ -8,7 +8,7 @@ namespace DataGenerator
     /// Mapping information on how to generate a class
     /// </summary>
     public class ClassMapping
-#if !NETSTANDARD1_3 && !NETSTANDARD1_6
+#if !NETSTANDARD1_3 && !NETSTANDARD1_5
         : ICloneable
 #endif
     {
@@ -87,7 +87,7 @@ namespace DataGenerator
         /// </value>
         public object SyncRoot { get; }
 
-#if !NETSTANDARD1_3 && !NETSTANDARD1_6
+#if !NETSTANDARD1_3 && !NETSTANDARD1_5
         /// <summary>
         /// Creates a new <see langword="object"/> that is a copy of the current instance.
         /// </summary>

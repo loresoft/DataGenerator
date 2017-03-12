@@ -24,7 +24,7 @@ namespace DataGenerator
             Assemblies = new AssemblyResolver();
             AutoMap = true;
 
-#if NETSTANDARD1_3 || NETSTANDARD1_6
+#if NETSTANDARD1_3 || NETSTANDARD1_5
             Assemblies.IncludeAssemblyFor<Configuration>();
 #endif
 
@@ -32,7 +32,7 @@ namespace DataGenerator
             Assemblies.ExcludeName("mscorlib");
             Assemblies.ExcludeName("Microsoft");
             Assemblies.ExcludeName("System");
-            
+
 
         }
 

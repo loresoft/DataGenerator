@@ -22,6 +22,7 @@ namespace DataGenerator.Tests
         public void GenerateProfile()
         {
             var generator = Generator.Create(c => c
+                .ExcludeName("xunit")
                 .Profile<UserProfile>()
                 .Entity<User>(e => e.Property(p => p.Note).Ignore())
             );

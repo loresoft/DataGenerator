@@ -65,8 +65,8 @@ namespace DataGenerator
         /// </summary>
         public void IncludeLoadedAssemblies()
         {
-#if NETSTANDARD1_3 || NETSTANDARD1_6
-            //TDOD figure out how to do this            
+#if NETSTANDARD1_3 || NETSTANDARD1_5
+            //TDOD figure out how to do this
 #else
             _sources.Add(() => AppDomain.CurrentDomain.GetAssemblies());
 #endif
@@ -124,7 +124,7 @@ namespace DataGenerator
         /// <param name="name">The name to compare.</param>
         public void ExcludeName(string name)
         {
-            _excludes.Add(a => a.FullName.Contains(name));
+            _excludes.Add(a => a.FullName.StartsWith(name));
         }
 
 

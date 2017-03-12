@@ -3,7 +3,7 @@
 namespace DataGenerator
 {
     /// <summary>
-    /// 
+    /// Class mapping context
     /// </summary>
     public class MappingContext : IMappingContext
     {

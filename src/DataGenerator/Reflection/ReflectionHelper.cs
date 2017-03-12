@@ -43,7 +43,6 @@ namespace DataGenerator.Reflection
         /// The name of the property.
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown if the <paramref name="propertyExpression"/> is null.</exception>
-        ///   
         /// <exception cref="ArgumentException">Thrown when the expression is:<br/>
         /// Not a <see cref="MemberExpression"/><br/>
         /// The <see cref="MemberExpression"/> does not represent a property.<br/>
@@ -65,7 +64,6 @@ namespace DataGenerator.Reflection
         /// The name of the property.
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown if the <paramref name="memberExpression"/> is null.</exception>
-        ///   
         /// <exception cref="ArgumentException">Thrown when the expression is:<br/>
         /// Not a <see cref="MemberExpression"/><br/>
         /// The <see cref="MemberExpression"/> does not represent a property.<br/>
@@ -110,7 +108,6 @@ namespace DataGenerator.Reflection
         /// The name of the property.
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown if the <paramref name="propertyExpression"/> is null.</exception>
-        ///   
         /// <exception cref="ArgumentException">Thrown when the expression is:<br/>
         /// Not a <see cref="MemberExpression"/><br/>
         /// The <see cref="MemberExpression"/> does not represent a property.<br/>
@@ -132,7 +129,6 @@ namespace DataGenerator.Reflection
         /// The name of the property.
         /// </returns>
         /// <exception cref="ArgumentNullException">Thrown if the <paramref name="memberExpression"/> is null.</exception>
-        ///   
         /// <exception cref="ArgumentException">Thrown when the expression is:<br/>
         /// Not a <see cref="MemberExpression"/><br/>
         /// The <see cref="MemberExpression"/> does not represent a property.<br/>
@@ -342,8 +338,8 @@ namespace DataGenerator.Reflection
         /// </param>
         /// <remarks>
         /// <para>
-        /// If the desired type is a primitive type or Decimal, 
-        /// empty string and null values will result in a 0 
+        /// If the desired type is a primitive type or Decimal,
+        /// empty string and null values will result in a 0
         /// or equivalent.
         /// </para>
         /// <para>

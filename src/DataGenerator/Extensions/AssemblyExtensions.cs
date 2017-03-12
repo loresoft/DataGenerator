@@ -21,16 +21,17 @@ namespace DataGenerator.Extensions
         public static IEnumerable<Type> GetTypesAssignableFrom<T>(this Assembly assembly)
         {
             if (assembly == null)
-                throw new ArgumentNullException("assembly");
+                throw new ArgumentNullException(nameof(assembly));
 
             var type = typeof(T);
             var typeInfo = type.GetTypeInfo();
 
             return assembly
                 .GetLoadableTypes()
-                .Where(t => {
+                .Where(t =>
+                {
                     var i = t.GetTypeInfo();
-                    return i.IsPublic && !i.IsAbstract && typeInfo.IsAssignableFrom(t);
+                    return i.IsPublic && !i.IsAbstract && typeInfo.IsAssignableFrom(i);
                 });
         }
 
@@ -43,7 +44,7 @@ namespace DataGenerator.Extensions
         public static IEnumerable<Type> GetLoadableTypes(this Assembly assembly)
         {
             if (assembly == null)
-                throw new ArgumentNullException("assembly");
+                throw new ArgumentNullException(nameof(assembly));
 
             // skip dynamic assemblies
             if (assembly.IsDynamic)
@@ -60,7 +61,7 @@ namespace DataGenerator.Extensions
                 //not interested in the types which cause the problem, load what we can
                 types = e.Types.Where(t => t != null).ToArray();
             }
-            catch(NotSupportedException)
+            catch (NotSupportedException)
             {
                 // some assemblies don't support getting types, ignore
                 return Enumerable.Empty<Type>();
@@ -68,5 +69,17 @@ namespace DataGenerator.Extensions
 
             return types;
         }
+
+#if NET40 || PORTABLE
+        /// <summary>
+        /// Retrieves an object that represents this type.
+        /// </summary>
+        /// <param name="type">Type to retrieve</param>
+        /// <returns></returns>
+        public static Type GetTypeInfo(this Type type)
+        {
+            return type;
+        }
+#endif
     }
 }

@@ -3,9 +3,9 @@
 namespace DataGenerator
 {
     /// <summary>
-    /// An <see langword="interface"/> defining the current generation state
+    /// Data generation context state
     /// </summary>
-    public interface IGenerateContext
+    public class GenerateContext : IGenerateContext
     {
         /// <summary>
         /// Gets or sets the current generator.
@@ -13,7 +13,7 @@ namespace DataGenerator
         /// <value>
         /// The current generator.
         /// </value>
-        Generator Generator { get; set; }
+        public Generator Generator { get; set; }
 
         /// <summary>
         /// Gets the type of the class being generated.
@@ -21,7 +21,7 @@ namespace DataGenerator
         /// <value>
         /// The type of the class.
         /// </value>
-        Type ClassType { get; }
+        public Type ClassType { get; set; }
 
         /// <summary>
         /// Gets the type of the member.
@@ -29,7 +29,7 @@ namespace DataGenerator
         /// <value>
         /// The type of the member.
         /// </value>
-        Type MemberType { get; }
+        public Type MemberType { get; set; }
 
         /// <summary>
         /// Gets the name of the member.
@@ -37,7 +37,7 @@ namespace DataGenerator
         /// <value>
         /// The name of the member.
         /// </value>
-        string MemberName { get; }
+        public string MemberName { get; set; }
 
         /// <summary>
         /// Gets the generation depth.
@@ -45,7 +45,7 @@ namespace DataGenerator
         /// <value>
         /// The generation depth.
         /// </value>
-        int Depth { get; }
+        public int Depth { get; set; }
 
         /// <summary>
         /// Gets the current generated instance.
@@ -53,6 +53,7 @@ namespace DataGenerator
         /// <value>
         /// The current generated instance.
         /// </value>
-        object Instance { get; }
+        public object Instance { get; set; }
+
     }
 }

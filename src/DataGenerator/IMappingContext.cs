@@ -5,7 +5,7 @@ namespace DataGenerator
     /// <summary>
     /// An <see langword="interface"/> defining the current mapping context.
     /// </summary>
-    public interface IMappingContext    
+    public interface IMappingContext
     {
         /// <summary>
         /// Gets the current class mapping.
