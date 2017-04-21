@@ -114,9 +114,9 @@ namespace DataGenerator.Fluent
         /// <returns>
         /// Fluent builder for an entity property.
         /// </returns>
-        public MemberConfigurationBuilder<TEntity, TProperty> Value(Func<TProperty> factory)
+        public MemberConfigurationBuilder<TEntity, TProperty> Value(Func<TEntity, TProperty> factory)
         {
-            var source = new FactoryDataSource<TProperty>(factory);
+            var source = new FactoryDataSource<TEntity, TProperty>(factory);
             MemberMapping.DataSource = source;
 
             return this;

@@ -15,7 +15,7 @@ namespace DataGenerator.Tests
             Property(p => p.City).DataSource<CitySource>();
             Property(p => p.State).DataSource<StateSource>();
             Property(p => p.Zip).DataSource<PostalCodeSource>();
-
+            Property(p => p.EmailAddress).Value(u => $"{u.FirstName}.{u.LastName}@mailinator.com");
             Property(p => p.Note).DataSource<LoremIpsumSource>();
             Property(p => p.Password).DataSource<PasswordSource>();
 
@@ -30,7 +30,7 @@ namespace DataGenerator.Tests
             Property(p => p.IsActive).Value(true);
 
             // delegate value
-            Property(p => p.Created).Value(() => DateTime.UtcNow);
+            Property(p => p.Created).Value(u => DateTime.UtcNow);
         }
     }
 }

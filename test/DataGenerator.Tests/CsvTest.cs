@@ -28,7 +28,7 @@ namespace DataGenerator.Tests
             );
 
 
-            var count = 100000;
+            var count = 10;
 
             var watch = Stopwatch.StartNew();
             var users = generator.List<User>(count);

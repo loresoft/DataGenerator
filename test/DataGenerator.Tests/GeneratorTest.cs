@@ -24,6 +24,10 @@ namespace DataGenerator.Tests
 
                     e.Property(p => p.FirstName).DataSource<FirstNameSource>();
                     e.Property(p => p.LastName).DataSource<LastNameSource>();
+
+                    // to use other properties, must come after there declaration
+                    e.Property(p => p.EmailAddress).Value(u => $"{u.FirstName}.{u.LastName}@mailinator.com");
+
                     e.Property(p => p.Address1).DataSource<StreetSource>();
                     e.Property(p => p.City).DataSource<CitySource>();
                     e.Property(p => p.State).DataSource<StateSource>();
@@ -43,10 +47,10 @@ namespace DataGenerator.Tests
                     e.Property(p => p.IsActive).Value(true);
 
                     // delegate value
-                    e.Property(p => p.Created).Value(() => DateTime.Now);
+                    e.Property(p => p.Created).Value(v => DateTime.Now);
 
                     // repeat call
-                    e.Property(p => p.Created).Value(() => DateTime.Now);
+                    e.Property(p => p.Created).Value(v => DateTime.Now);
                 })
             );
 
@@ -55,7 +59,7 @@ namespace DataGenerator.Tests
             var classMapping = generator.Configuration.Mapping.First();
             classMapping.Should().NotBeNull();
 
-            classMapping.Value.Members.Count.Should().Be(12);
+            classMapping.Value.Members.Count.Should().Be(13);
 
             var instance = generator.Single<User>();
             instance.Should().NotBeNull();
@@ -67,6 +71,7 @@ namespace DataGenerator.Tests
             instance.Zip.Should().NotBeNull();
             instance.Note.Should().NotBeNull();
             instance.Password.Should().NotBeNull();
+            instance.EmailAddress.Should().Be($"{instance.FirstName}.{instance.LastName}@mailinator.com");
         }
 
         [Fact]
