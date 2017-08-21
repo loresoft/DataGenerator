@@ -11,6 +11,7 @@ namespace DataGenerator.Tests
         {
             Property(p => p.FirstName).DataSource<FirstNameSource>();
             Property(p => p.LastName).DataSource<LastNameSource>();
+            Property(p => p.FullName).Value(u => $"{u.FirstName} {u.LastName}");
             Property(p => p.Address1).DataSource<StreetSource>();
             Property(p => p.City).DataSource<CitySource>();
             Property(p => p.State).DataSource<StateSource>();
