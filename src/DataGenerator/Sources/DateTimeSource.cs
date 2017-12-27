@@ -49,7 +49,12 @@ namespace DataGenerator.Sources
             var range = (_max - _min).Ticks;
             var ticks = (long)(RandomGenerator.Current.NextDouble() * range);
 
-            return _min.AddTicks(ticks);
+            var nextValue = _min.AddTicks(ticks);
+
+            if (generateContext?.MemberType == typeof(DateTimeOffset))
+                return new DateTimeOffset(nextValue);
+
+            return nextValue;
         }
     }
 }

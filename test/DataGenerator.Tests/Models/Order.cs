@@ -8,8 +8,10 @@ namespace DataGenerator.Tests.Models
         public Guid Id { get; set; }
 
         public string Name { get; set; }
-        
+
         public decimal Total { get; set; }
+
+        public DateTimeOffset Ordered { get; set; }
 
         public User User { get; set; }
 
