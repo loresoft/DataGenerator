@@ -23,7 +23,7 @@ namespace DataGenerator.Extensions
             if (list == null || list.Count < 1)
                 return default(T);
 
-            var index = RandomGenerator.Current.Next(list.Count - 1);
+            var index = RandomGenerator.Current.Next(list.Count);
             return list[index];
         }
 
