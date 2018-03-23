@@ -86,6 +86,7 @@
     </ItemGroup>
 
     <Message Text="APPVEYOR: $(APPVEYOR)"/>
+    <Message Text="Coverage File: %(CoverageFiles.Identity)"/>
 
     <exec Command="$(CoverallsPath)\csmacnz.coveralls.exe --opencover --input &quot;%(CoverageFiles.Identity)&quot;"
           WorkingDirectory="$(TestFolder)\%(CoverageFiles.RecursiveDir)"
