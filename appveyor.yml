@@ -4,6 +4,8 @@ environment:
   Major: 4
   Minor: 0
   Revision: 0
+  COVERALLS_REPO_TOKEN:
+    secure: ZUu/hqbNugncqPkxoYv3hT7hUtv2JHRQLjH/B4r/ymawzUIfaVHFOYbfxLKMQifk
 configuration: Release
 before_build:
 - .\bootstrap.cmd

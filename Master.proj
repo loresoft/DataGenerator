@@ -7,6 +7,7 @@
     <SourceFolder>$(MSBuildProjectDirectory)\src</SourceFolder>
     <TestFolder>$(MSBuildProjectDirectory)\test</TestFolder>
 
+    <CoverallsPath>$(ToolFolder)\coveralls.net\tools</CoverallsPath>
     <MSBuildCommunityTasksPath>$(ToolFolder)\MSBuildTasks\tools</MSBuildCommunityTasksPath>
   </PropertyGroup>
 
@@ -75,12 +76,21 @@
       <TestAssemblies Include="$(TestFolder)\**\*.Tests.csproj"/>
     </ItemGroup>
 
-    <exec Command="dotnet test &quot;%(TestAssemblies.Identity)&quot; --configuration $(BuildConfiguration)"
+    <exec Command="dotnet test &quot;%(TestAssemblies.Identity)&quot; --configuration $(BuildConfiguration) /p:CollectCoverage=true /p:CoverletOutputFormat=opencover"
           WorkingDirectory="$(TestFolder)\%(TestAssemblies.RecursiveDir)"/>
   </Target>
 
+  <Target Name="Coverage" DependsOnTargets="Test">
+    <ItemGroup>
+      <CoverageFiles Include="$(TestFolder)\**\coverage.xml"/>
+    </ItemGroup>
 
-  <Target Name="Package" DependsOnTargets="Test">
+    <exec Command="$(CoverallsPath)\csmacnz.coveralls.exe --opencover --input &quot;%(CoverageFiles.Identity)&quot;"
+          WorkingDirectory="$(TestFolder)\%(CoverageFiles.RecursiveDir)"
+          Condition=" '$(APPVEYOR)' == 'True' "/>
+  </Target>
+
+  <Target Name="Package" DependsOnTargets="Coverage">
     <MakeDir Directories="$(BuildFolder)" Condition="!EXISTS($(BuildFolder))" />
 
     <ItemGroup>
