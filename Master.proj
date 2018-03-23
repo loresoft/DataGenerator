@@ -85,6 +85,8 @@
       <CoverageFiles Include="$(TestFolder)\**\coverage.xml"/>
     </ItemGroup>
 
+    <Message Text="APPVEYOR: $(APPVEYOR)"/>
+
     <exec Command="$(CoverallsPath)\csmacnz.coveralls.exe --opencover --input &quot;%(CoverageFiles.Identity)&quot;"
           WorkingDirectory="$(TestFolder)\%(CoverageFiles.RecursiveDir)"
           Condition=" '$(APPVEYOR)' == 'True' "/>
