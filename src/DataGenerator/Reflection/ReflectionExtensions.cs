@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
 
 namespace DataGenerator.Reflection
 {
-    internal static class GeneratorExtensions
+    internal static class ReflectionExtensions
     {
         public static void PushInstance(this ILGenerator generator, Type type)
         {
@@ -95,6 +97,27 @@ namespace DataGenerator.Reflection
         public static Type GetTypeInfo(this Type type)
         {
             return type;
+        }
+#endif
+
+#if NETSTANDARD1_3
+        public static Type[] GetInterfaces(this TypeInfo type)
+        {
+            var types = new List<Type>();
+            var t = type.AsType();
+            while (t != null)
+            {
+                var ti = t.GetTypeInfo();
+                types.AddRange(ti.ImplementedInterfaces);
+                t = ti.BaseType;
+            }
+
+            return types.ToArray();
+        }
+
+        public static Type[] GetGenericArguments(this TypeInfo type)
+        {
+            return type.GenericTypeArguments;
         }
 #endif
     }

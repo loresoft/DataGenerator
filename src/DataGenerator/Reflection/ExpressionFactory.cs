@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 
@@ -65,13 +66,19 @@ namespace DataGenerator.Reflection
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
 
-            var constructorInfo = type.GetTypeInfo().GetConstructor(Type.EmptyTypes);
+            var typeInfo = type.GetTypeInfo();
+
+#if NETSTANDARD1_3
+            var constructorInfo = typeInfo.DeclaredConstructors.FirstOrDefault(c => c.GetParameters().Length == 0);
+#else
+            var constructorInfo = typeInfo.GetConstructor(Type.EmptyTypes);
+#endif
             if (constructorInfo == null)
                 throw new ArgumentException("Could not find constructor for type.", nameof(type));
 
             var instanceCreate = Expression.New(constructorInfo);
 
-            var instanceCreateCast = type.GetTypeInfo().IsValueType
+            var instanceCreateCast = typeInfo.IsValueType
                 ? Expression.Convert(instanceCreate, typeof(object))
                 : Expression.TypeAs(instanceCreate, typeof(object));
 

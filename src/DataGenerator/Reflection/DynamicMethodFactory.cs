@@ -109,7 +109,11 @@ namespace DataGenerator.Reflection
             }
             else
             {
+#if NETSTANDARD1_3
+                var constructorInfo = typeInfo.DeclaredConstructors.FirstOrDefault(c => c.GetParameters().Length == 0);
+#else
                 var constructorInfo = typeInfo.GetConstructor(Type.EmptyTypes);
+#endif
                 if (constructorInfo == null)
                     throw new InvalidOperationException($"Could not get constructor for {type}.");
 
