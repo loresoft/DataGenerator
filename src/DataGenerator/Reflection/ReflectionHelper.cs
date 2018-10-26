@@ -360,8 +360,13 @@ namespace DataGenerator.Reflection
                 throw new ArgumentNullException(nameof(valueType));
 
             // types match, just copy value
+#if NETSTANDARD1_5
+            if (desiredType == valueType)
+                return value;
+#else
             if (desiredType.IsAssignableFrom(valueType))
                 return value;
+#endif
 
             bool isNullable = desiredType.GetTypeInfo().IsGenericType && (desiredType.GetGenericTypeDefinition() == typeof(Nullable<>));
             if (isNullable)
