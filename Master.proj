@@ -7,7 +7,6 @@
     <SourceFolder>$(MSBuildProjectDirectory)\src</SourceFolder>
     <TestFolder>$(MSBuildProjectDirectory)\test</TestFolder>
 
-    <CoverallsPath>$(ToolFolder)\coveralls.net\tools</CoverallsPath>
     <MSBuildCommunityTasksPath>$(ToolFolder)\MSBuildTasks\tools</MSBuildCommunityTasksPath>
   </PropertyGroup>
 
@@ -87,7 +86,7 @@
 
     <Message Text="Coverage File: %(CoverageFiles.Identity)"/>
 
-    <exec Command="$(CoverallsPath)\csmacnz.coveralls.exe --opencover --input &quot;%(CoverageFiles.Identity)&quot; --jobId $(APPVEYOR_JOB_ID)"
+    <exec Command="csmacnz.coveralls.exe --opencover --input &quot;%(CoverageFiles.Identity)&quot; --jobId $(APPVEYOR_JOB_ID)"
           WorkingDirectory="$(TestFolder)\%(CoverageFiles.RecursiveDir)"
           Condition=" '$(APPVEYOR)' == 'True' "/>
   </Target>
