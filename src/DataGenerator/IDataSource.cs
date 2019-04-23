@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace DataGenerator
+﻿namespace DataGenerator
 {
     /// <summary>
     /// An <see langword="interface"/> for generating data from a source

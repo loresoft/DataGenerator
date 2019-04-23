@@ -1,0 +1,23 @@
+<Project>
+  <Import Project="version.props" />
+
+  <PropertyGroup Label="Source Link">
+    <ProjectParentDirectory>$([System.IO.Path]::GetDirectoryName('$(MSBuildProjectDirectory)'))</ProjectParentDirectory>
+    <ProjectParentDirectoryName>$([System.IO.Path]::GetFileName('$(ProjectParentDirectory)'))</ProjectParentDirectoryName>
+  </PropertyGroup>
+
+  <Import Project="sourcelink.props" Condition="'$(ProjectParentDirectoryName)' == 'src'" />
+
+  <PropertyGroup Label="Package">
+    <Description>Automatically generate intelligent and realistic test data for an object.</Description>
+    <Copyright>Copyright © 2019 LoreSoft</Copyright>
+    <Authors>LoreSoft</Authors>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <PackageTags>est;Data Generation;Fake;Sample</PackageTags>
+    <PackageOutputPath>$(SolutionDir)artifacts</PackageOutputPath>
+    <PackageProjectUrl>https://github.com/loresoft/DataGenerator</PackageProjectUrl>
+    <PackageLicenseUrl>https://raw.githubusercontent.com/loresoft/DataGenerator/master/LICENSE</PackageLicenseUrl>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/loresoft/DataGenerator</RepositoryUrl>
+  </PropertyGroup>
+</Project>

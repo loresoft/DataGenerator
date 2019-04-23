@@ -1,17 +1,18 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.28803.202
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{AAFC7935-A4D6-40F0-9340-CBB915D10517}"
 	ProjectSection(SolutionItems) = preProject
 		appveyor.yml = appveyor.yml
-		bootstrap.cmd = bootstrap.cmd
-		Master.proj = Master.proj
+		build\common.props = build\common.props
+		build\sourcelink.props = build\sourcelink.props
+		build\version.props = build\version.props
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGenerator", "src\DataGenerator\DataGenerator.csproj", "{54A7A50D-FE62-45BF-B978-B26A59CB37FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataGenerator", "src\DataGenerator\DataGenerator.csproj", "{54A7A50D-FE62-45BF-B978-B26A59CB37FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataGenerator.Tests", "test\DataGenerator.Tests\DataGenerator.Tests.csproj", "{7525ABFC-D6E5-48E4-9F60-571D54B94141}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataGenerator.Tests", "test\DataGenerator.Tests\DataGenerator.Tests.csproj", "{7525ABFC-D6E5-48E4-9F60-571D54B94141}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,5 +31,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3A19C29A-3DEF-4890-8398-7C8C3A3E7A85}
 	EndGlobalSection
 EndGlobal

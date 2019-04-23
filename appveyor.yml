@@ -1,20 +1,39 @@
 version: 4.0.0.{build}
 os: Visual Studio 2017
 environment:
-  Major: 4
-  Minor: 0
-  Revision: 0
+  ASPNETCORE_ENVIRONMENT: appveyor
   COVERALLS_REPO_TOKEN:
     secure: ZUu/hqbNugncqPkxoYv3hT7hUtv2JHRQLjH/B4r/ymawzUIfaVHFOYbfxLKMQifk
+
+init:
+  - git config --global core.autocrlf input
+dotnet_csproj:
+  patch: true
+  file: 'build\version.props'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
+
 configuration: Release
-before_build:
-- .\bootstrap.cmd
-build:
-  project: master.proj
-  verbosity: normal
-test: off
+
+install:
+  - dotnet tool install --global coveralls.net
+
+build_script:
+  - dotnet pack DataGenerator.sln --configuration Release --include-symbols --include-source
+
+test_script:
+  - dotnet test DataGenerator.sln --configuration Release /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:Exclude="[xunit*]*"
+
+after_test:
+  - csmacnz.coveralls --useRelativePaths --multiple --input "opencover=test\DataGenerator.Tests\coverage.opencover.xml"
+
 artifacts:
-- path: Build\*.nupkg
+- path: artifacts\*.nupkg
+  name: Packages
+
 deploy:
 - provider: Environment
   name: MyGet
