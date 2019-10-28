@@ -1,4 +1,4 @@
-version: 4.0.0.{build}
+version: 5.0.0.{build}
 os: Visual Studio 2019
 environment:
   ASPNETCORE_ENVIRONMENT: appveyor
@@ -7,6 +7,7 @@ environment:
 
 init:
   - git config --global core.autocrlf input
+
 dotnet_csproj:
   patch: true
   file: 'build\version.props'
