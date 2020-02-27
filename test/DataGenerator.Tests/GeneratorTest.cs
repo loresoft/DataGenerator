@@ -148,6 +148,8 @@ namespace DataGenerator.Tests
         [Fact]
         public void GenerateSingleOverride()
         {
+            
+
             var generator = Generator.Create(c => c
                 .ExcludeName("xunit")
                 .Entity<User>(e =>
@@ -173,8 +175,13 @@ namespace DataGenerator.Tests
 
             classMapping.Value.Members.Count.Should().Be(8);
 
+            var user = new User();
+            Generator.Default.Single<User>(e => e.Factory(t => user));
+
+
             var instance = generator.Single<User>(e =>
             {
+                e.Factory(c => user);
                 // override note property with static value
                 e.Property(p => p.Note).Value("Test");
             });

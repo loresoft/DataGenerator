@@ -49,7 +49,8 @@ namespace DataGenerator
             var type = typeof(T);
             var classMapping = GetMapping(type);
 
-            var instance = GenerateInstance<T>(classMapping);
+            var instance = CreateInstance<T>(classMapping);
+            GenerateInstance(classMapping, instance);
 
             return instance;
         }
@@ -74,7 +75,8 @@ namespace DataGenerator
             var mappingBuilder = new ClassMappingBuilder<T>(classMapping);
             builder(mappingBuilder);
 
-            var instance = GenerateInstance<T>(classMapping);
+            var instance = CreateInstance<T>(classMapping);
+            GenerateInstance(classMapping, instance);
 
             return instance;
         }
@@ -117,7 +119,9 @@ namespace DataGenerator
 
             for (int i = 0; i < count; i++)
             {
-                var instance = GenerateInstance<T>(classMapping);
+                var instance = CreateInstance<T>(classMapping);
+                GenerateInstance(classMapping, instance);
+
                 list.Add(instance);
             }
 
@@ -149,7 +153,9 @@ namespace DataGenerator
 
             for (int i = 0; i < count; i++)
             {
-                var instance = GenerateInstance<T>(classMapping);
+                var instance = CreateInstance<T>(classMapping);
+                GenerateInstance(classMapping, instance);
+
                 list.Add(instance);
             }
 
@@ -157,12 +163,9 @@ namespace DataGenerator
         }
 
 
-        private T GenerateInstance<T>(ClassMapping classMapping)
+        private void GenerateInstance<T>(ClassMapping classMapping, T instance)
         {
             var typeAccessor = classMapping.TypeAccessor;
-            var instance = classMapping.Factory != null
-                ? classMapping.Factory(typeAccessor.Type)
-                : typeAccessor.Create();
 
             foreach (var memberMapping in classMapping.Members)
             {
@@ -183,6 +186,15 @@ namespace DataGenerator
                 var value = dataSource.NextValue(context);
                 SetValueWithCoercion(memberAccessor, instance, value);
             }
+        }
+
+        private T CreateInstance<T>(ClassMapping classMapping)
+        {
+            var typeAccessor = classMapping.TypeAccessor;
+
+            var instance = classMapping.Factory != null
+                ? classMapping.Factory(typeAccessor.Type)
+                : typeAccessor.Create();
 
             return (T)instance;
         }
@@ -226,8 +238,7 @@ namespace DataGenerator
                         memberMapping = new MemberMapping { MemberAccessor = property };
                         mapping.Members.Add(memberMapping);
                     }
-
-
+                    
                     // skip already mapped fields
                     if (memberMapping.Ignored || memberMapping.DataSource != null)
                         continue;
