@@ -1,5 +1,6 @@
 using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using CsvHelper;
 using DataGenerator.Tests.Models;
@@ -42,7 +43,7 @@ namespace DataGenerator.Tests
 
             using (var textWriter = File.CreateText(fileName))
             {
-                var csv = new CsvWriter(textWriter);
+                var csv = new CsvWriter(textWriter, CultureInfo.InvariantCulture);
                 csv.WriteRecords(users);
                 textWriter.Flush();
             }
