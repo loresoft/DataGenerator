@@ -262,5 +262,43 @@ namespace DataGenerator.Tests
             memberMapping.Should().NotBeNull();
             memberMapping.DataSource.Should().BeOfType<LoremIpsumSource>();
         }
+
+        [Fact]
+        public void GenerateEnumerable()
+        {
+            var generator = Generator.Create(c => c
+                .ExcludeName("xunit")
+                .Entity<User>(e =>
+                {
+                    e.AutoMap();
+
+                    // First name will be a guid to make sure we're not creating duplicates
+                    e.Property(p => p.FirstName).DataSource<GuidSource>();
+                    e.Property(p => p.LastName).DataSource<LastNameSource>();
+                    e.Property(p => p.Address1).DataSource<StreetSource>();
+                    e.Property(p => p.City).DataSource<CitySource>();
+                    e.Property(p => p.State).DataSource<StateSource>();
+                    e.Property(p => p.Zip).DataSource<PostalCodeSource>();
+
+                    e.Property(p => p.Note).DataSource<LoremIpsumSource>();
+                    e.Property(p => p.Password).DataSource<PasswordSource>();
+                })
+            );
+
+            var count = 50;
+
+            // Fetch an enumerable of users with GUID names
+            var users = generator.Enumerable<User>(count);
+
+            // Ensure it has the requested length
+            users.Should().HaveCount(count);
+
+            // Fetch all the unique names used in the enumerable
+            var uniqueUserNames = users.Select(u => u.FirstName).Distinct();
+
+            // Ensure every user has a unique name and the enumerable isn't just
+            // returning the same user over and over.
+            uniqueUserNames.Should().HaveCount(count);
+        }
     }
 }
