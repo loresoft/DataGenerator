@@ -84,6 +84,58 @@ namespace DataGenerator
 
         /// <summary>
         /// Generates a random number of type <typeparamref name="T"/> with the properties set according to configuration.
+        ///
+        /// This will reduce memory consumption when creating and immediately processing generated objects.
+        /// </summary>
+        /// <typeparam name="T">The type to generate.</typeparam>
+        /// <returns>An enumerable of type <typeparamref name="T"/> with the properties set according to configuration.</returns>
+        public IEnumerable<T> Enumerable<T>()
+        {
+            return Enumerable<T>(2, 10);
+        }
+
+        /// <summary>
+        /// Generates a random number between <paramref name="min"/> and <paramref name="max"/> of type <typeparamref name="T"/> with
+        /// the properties set according to configuration.
+        ///
+        /// This will reduce memory consumption when creating and immediately processing generated objects.
+        /// </summary>
+        /// <typeparam name="T">The type to generate.</typeparam>
+        /// <returns>An enumberable of type <typeparamref name="T"/> with the properties set according to configuration.</returns>
+        public IEnumerable<T> Enumerable<T>(int min, int max)
+        {
+            var count = RandomGenerator.Current.Next(min, max);
+            return Enumerable<T>(count);
+        }
+
+        /// <summary>
+        /// Generates a <paramref name="count"/> of type <typeparamref name="T"/> with the properties set according to configuration.
+        ///
+        /// This will reduce memory consumption when creating and immediately processing generated objects.
+        /// </summary>
+        /// <typeparam name="T">The type to generate.</typeparam>
+        /// <returns>An enumerable of type <typeparamref name="T"/> with the properties set according to configuration.</returns>
+        public IEnumerable<T> Enumerable<T>(int count)
+        {
+            var type = typeof(T);
+            var classMapping = GetMapping(type);
+
+            // generate at least one
+            count = Math.Max(1, count);
+
+            for (var i = 0; i < count; i++)
+            {
+                var instance = CreateInstance<T>(classMapping);
+
+                GenerateInstance(classMapping, instance);
+
+                yield return instance;
+            }
+        }
+
+
+        /// <summary>
+        /// Generates a random number of type <typeparamref name="T"/> with the properties set according to configuration.
         /// </summary>
         /// <typeparam name="T">The type to generate.</typeparam>
         /// <returns>A list of type <typeparamref name="T"/> with the properties set according to configuration.</returns>
