@@ -32,7 +32,7 @@ after_test:
   - csmacnz.coveralls --useRelativePaths --multiple --input "opencover=test\DataGenerator.Tests\coverage.opencover.xml"
 
 artifacts:
-- path: artifacts\*.nupkg
+- path: artifacts\*.*nupkg
   name: Packages
 
 deploy:
