@@ -1,0 +1,25 @@
+version: 2
+updates:
+- package-ecosystem: nuget
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "11:00"
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: CsvHelper
+    versions:
+    - 21.3.0
+    - 22.1.0
+    - 22.1.1
+    - 22.1.2
+    - 23.0.0
+    - 24.0.1
+    - 25.0.0
+    - 26.0.0
+    - 26.0.1
+    - 26.1.0
+    - 27.0.0
+  - dependency-name: coverlet.msbuild
+    versions:
+    - 3.0.2
